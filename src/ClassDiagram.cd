@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Engine" Collapsed="true">
+    <Position X="1.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAACgIZABwQBAIAAEIwAAAAQCAhIRGAiSAAAAAY=</HashCode>
+      <FileName>Engine\Engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="1.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAIAAwAAAAAAAAAAAAiAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Game\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::GameObjectManager">
+    <Position X="4.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAEAgAABAABAAAIAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObject\GameObjectManager.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="poRootTree" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Azul::GameObject">
+    <Position X="9.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJRAAAAAIAAAAkAAAARAAIAAAIABAAAACAAhEgIAAAA=</HashCode>
+      <FileName>GameObject\GameObject.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="poGraphicsObject" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Azul::RenderMaterial">
+    <Position X="13" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAABAAAgAAAAAAEAAAAAAQAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>GraphicsObject\RenderMaterial.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::GraphicsObject">
+    <Position X="13" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACABAAAAAYAAAgAAAAAAAQAABAhEAAAAAA=</HashCode>
+      <FileName>GraphicsObject\GraphicsObject.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="pModel" />
+      <Field Name="pShaderObj" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Azul::ShaderObject">
+    <Position X="16" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Azul::ShaderObject::Name" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Shaders\ShaderObject.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIAAAEACAAAABAAAAAAAgAAAAABAQBAAAAAgQKAAAAA=</HashCode>
+      <FileName>Shaders\ShaderObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::GraphicsObject_FlatTexture">
+    <Position X="9.75" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AoAABAAAAJAAAgAAAAAAAACAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>GraphicsObject\GraphicsObject_FlatTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::GraphicsObject_Wireframe">
+    <Position X="12.75" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAABAAAgAAAAAAAAAAAAAAAAgAAAAkAAAAAAA=</HashCode>
+      <FileName>GraphicsObject\GraphicsObject_Wireframe.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::GraphicsObject_ColorByPosition">
+    <Position X="15.75" Y="9" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAAABAAAgAAAAAAEAABAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>GraphicsObject\GraphicsObject_ColorByPosition.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::PCSNode" Collapsed="true">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAQAhEAIAAAgAAIwKAgABgCgGAAIAMAkQEQCjAA=</HashCode>
+      <FileName>C:\Users\Andrew\Perforce\Engine_I_Laptop\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::PCSTree" Collapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAEABAAAAAAAAAAIABAAAAAAAAEAAAAAgoAAEAAA=</HashCode>
+      <FileName>C:\Users\Andrew\Perforce\Engine_I_Laptop\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSTree.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="pRoot" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Azul::Model" Collapsed="true">
+    <Position X="21.25" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="Azul::Model::Vert_xyzuvn" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Model.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="Azul::Model::Tri_index" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Model.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AwAAAKAAAAAAAAAAgIAAAAAAAAQAAAAAAAhgAAIEAAA=</HashCode>
+      <FileName>Models\Model.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::CubeModel" Collapsed="true">
+    <Position X="21.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAAIA=</HashCode>
+      <FileName>Models\CubeModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::DiamondModel" Collapsed="true">
+    <Position X="23" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAACAAAAAAgAAAAAAAAAAAAAAAAAAAgAAgAAAA=</HashCode>
+      <FileName>Models\DiamondModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::PyramidModel" Collapsed="true">
+    <Position X="19.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAiAAAAAAgAAAAAAAAAAAAAAAAAAAAAAgAAgAAAA=</HashCode>
+      <FileName>Models\PyramidModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azul::SphereModel" Collapsed="true">
+    <Position X="25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAQAAAAAAAAAAAAAAAAAAAAAIAAAAgAgAAAAA=</HashCode>
+      <FileName>Models\SphereModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
