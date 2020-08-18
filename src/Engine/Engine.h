@@ -1,7 +1,3 @@
-//----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------
-
 #ifndef ENGINE_H
 #define ENGINE_H
 
@@ -37,6 +33,7 @@
 #include <string.h>
 #include <math.h>
 
+
 class Engine
 {
 public:
@@ -51,20 +48,22 @@ public:
 	virtual void Initialize();
 	virtual void LoadContent() = 0;
 	virtual void Update(float currentTime) = 0;
-	virtual void Draw() = 0;
+	virtual void Draw();
 	virtual void UnLoadContent();
 
 	// optional overloading
 	virtual void ClearBufferFunc();
 
-	int GetKey(int key);						  // Keenan(24)
-	int GetMouseButton(int button);               // Keenan(25)
-	void GetCursorPos(float& xPos, float& yPos);  // Keenan(25)
+	int GetKey(int key);						  
+	int GetMouseButton(int button);               
+	void GetCursorPos(float& xPos, float& yPos);  
 
 private:
 	void InitGLFW();
 	void CreateOpenGLWindow();
 	void InitGlew();
+	bool WindowOpen();
+
 
 public:
 
@@ -116,6 +115,7 @@ protected:
 	static void glfw_onMouseButton(GLFWwindow* window, int button, int action, int mods);
 	static void glfw_onMouseMove(GLFWwindow* window, double x, double y);
 	static void glfw_onMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
+
 	void setVsync(bool enable);
 
 private:

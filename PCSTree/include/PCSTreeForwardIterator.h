@@ -1,6 +1,4 @@
-//-----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------- 
+
 
 #ifndef PCSTREE_FORWARD_ITERATOR_H
 #define PCSTREE_FORWARD_ITERATOR_H

@@ -1,11 +1,12 @@
-//----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------
+
 
 #include "Game/Game.h"
 #include "Keyboard.h"
 
-extern Game* pGame;
+#include "Editor/Editor.h"
+
+//extern Game* pGame;
+extern Editor* pEditor;
 
 namespace Azul
 {
@@ -16,7 +17,7 @@ namespace Azul
 		bool value;
 
 
-		if (pGame->GetKey(key) == GLFW_PRESS)
+		if (pEditor->GetKey(key) == GLFW_PRESS)
 		{
 			value = true;
 		}

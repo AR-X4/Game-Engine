@@ -1,18 +1,22 @@
-//----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------
+//#include "Game/Game.h"
+#include "Editor/Editor.h"
 
-#include "Game/Game.h"
-
-Game* pGame = 0;
+//Game* pGame = 0;
+Editor* pEditor = 0;
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	pGame = new Game("Graphics_Engine", 1280, 720);
+	/*pGame = new Game("Graphics_Engine", 1920, 1080);
 	assert(pGame);
 
 	pGame->Run();
-	delete pGame;
+	delete pGame;*/
+
+	pEditor = new Editor("Graphics_Engine", 1920, 1080);
+	assert(pEditor);
+
+	pEditor->Run();
+	delete pEditor;
 
 	return 0;
 }

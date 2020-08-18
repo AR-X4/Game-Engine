@@ -17,6 +17,7 @@ namespace Azul
 		static void Draw(void);
 		static void Update(float currentTime);
 
+		static void Create();
 		static void Destroy();
 		~GameObjectManager();
 
@@ -26,6 +27,7 @@ namespace Azul
 		static GameObjectManager* privGetInstance();
 
 		// data
+		static GameObjectManager* poGameObjectManager;
 		PCSTree* poRootTree;
 	};
 

@@ -1,6 +1,4 @@
-//----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------
+
 
 #ifndef DLINK_H
 #define DLINK_H
@@ -32,8 +30,8 @@ public:
 	static void RemoveNode(DLink*& pHead, DLink* pNode);
 
 	// Methods with Head and Tail
-	static void AddToLast(DLink*& pHead, DLink*& pLast, DLink* pNode);
-	static void RemoveNode(DLink*& pHead, DLink*& pLast, DLink* pNode);
+	//static void AddToLast(DLink*& pHead, DLink*& pLast, DLink* pNode);
+	//static void RemoveNode(DLink*& pHead, DLink*& pLast, DLink* pNode);
 
 	//----------------------------------------------------------------------
 	// Data

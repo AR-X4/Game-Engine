@@ -95,6 +95,24 @@
     <Filter Include="Source Files\Manager">
       <UniqueIdentifier>{1b5bd079-2ff5-4293-8333-1265830c5c23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_Libs\imgui">
+      <UniqueIdentifier>{f1b711ef-896f-4039-a9a7-b0c4cce44198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Libs\imgui\lib">
+      <UniqueIdentifier>{2c2db2b7-10dc-452d-b49f-6c29400c74a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Libs\imgui\include">
+      <UniqueIdentifier>{d3af4c9e-5a58-4ab7-9efe-8b5d34f174a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{645d06a3-890c-492b-a07e-4a8355f72b1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{f312d6ea-a603-46f9-b4c1-d48b66afe494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\GUIWindows">
+      <UniqueIdentifier>{53b7defd-0209-4106-bd6f-7b7cb2cf0e8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Framework\__DO NOT MODIFY__">
@@ -163,7 +181,12 @@
     <None Include="Shaders\texturePointLightDiff.vs.glsl">
       <Filter>Source Files\Shaders</Filter>
     </None>
-    <None Include="Textures\Texture.cd" />
+    <None Include="..\dist\imgui\lib\imgui_X86Release.pdb">
+      <Filter>_Libs\imgui\lib</Filter>
+    </None>
+    <None Include="..\dist\imgui\lib\imgui_X86Debug.pdb">
+      <Filter>_Libs\imgui\lib</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Framework\Framework.h">
@@ -364,6 +387,48 @@
     <ClInclude Include="Manager\Manager.h">
       <Filter>Source Files\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Input\InputObserver.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imconfig.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imgui.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imgui_internal.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imstb_rectpack.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imstb_textedit.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imstb_truetype.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imgui_impl_opengl3.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui\include\imgui_impl_glfw.h">
+      <Filter>_Libs\imgui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Editor.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GUIManager.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GUIWindow.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ViewportWindow.h">
+      <Filter>Source Files\GUI\GUIWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\StatsWindow.h">
+      <Filter>Source Files\GUI\GUIWindows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -465,6 +530,24 @@
     <ClCompile Include="Manager\DLink.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Input\InputObserver.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Editor.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GUIManager.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GUIWindow.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ViewportWindow.cpp">
+      <Filter>Source Files\GUI\GUIWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\StatsWindow.cpp">
+      <Filter>Source Files\GUI\GUIWindows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\dist\Math\lib\Math_X86Debug.lib">
@@ -496,6 +579,12 @@
     </Library>
     <Library Include="..\dist\PCSTree\lib\PCSTree_X86Release.lib">
       <Filter>_Libs\PCSTree\lib</Filter>
+    </Library>
+    <Library Include="..\dist\imgui\lib\imgui_X86Debug.lib">
+      <Filter>_Libs\imgui\lib</Filter>
+    </Library>
+    <Library Include="..\dist\imgui\lib\imgui_X86Release.lib">
+      <Filter>_Libs\imgui\lib</Filter>
     </Library>
   </ItemGroup>
   <ItemGroup>

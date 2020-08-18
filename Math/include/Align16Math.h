@@ -1,8 +1,6 @@
-//----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------
+
 //
-// Framework - for Keenan's C++ classes
+// Framework 
 //
 //    One header to rule them all, 
 //        one header to find them, 

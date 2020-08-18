@@ -1,4 +1,3 @@
-
 #include "sb7.h"
 #include "Game.h"
 #include "MathEngine.h"
@@ -13,10 +12,12 @@
 #include "Models/ModelManager.h"
 #include "Shaders/ShaderManager.h"
 
+
 using namespace Azul;
 
-// TO DO: ----------------------------------
-//Camera* pCam = nullptr;
+
+
+//PerformanceTimer timer;
 
 // Demo
 Vect Orig_up;
@@ -71,6 +72,7 @@ void Game::LoadContent()
 	ModelManager::Create();
 	ShaderManager::Create();
 	TextureManager::Create();
+	GameObjectManager::Create();
 
 	// Camera setup
 	Camera* pCam = CameraManager::Add(Camera::Name::Cam1);
@@ -107,7 +109,8 @@ void Game::LoadContent()
 	obj.set(0, 0, -3);
 	pCam->SetHelper(Orig_up, obj, Orig_pos);
 
-	Trace::out("Z, I,O, \n");
+	
+	
 }
 
 
@@ -305,6 +308,9 @@ void Game::Update(float currentTime)
 
 	// Update the game objects
 	GameObjectManager::Update(currentTime);
+
+
+	
 }
 
 
@@ -316,7 +322,11 @@ void Game::Update(float currentTime)
 //-----------------------------------------------------------------------------
 void Game::Draw()
 {
+
+
 	GameObjectManager::Draw();
+
+	
 }
 
 
@@ -339,6 +349,8 @@ void Game::UnLoadContent()
 	GameObjectManager::Destroy();
 	ModelManager::Destroy();
 	ShaderManager::Destroy();
+
+	
 
 }
 

@@ -1,13 +1,12 @@
-//----------------------------------------------------------------------------
-// Copyright 2020, Ed Keenan, all rights reserved.
-//----------------------------------------------------------------------------
-
 #include "Engine.h"
+
 
 Engine* Engine::app = 0;
 
 Engine::Engine(const char* pWindowName, const int Width, const int Height)
 {
+	Engine::app = this;
+
 	this->window = nullptr;
 
 	assert(pWindowName);
@@ -42,7 +41,7 @@ void Engine::Run()
 
 	this->Initialize(); // virtual, calls init from derived game class
 
-	this->CreateOpenGLWindow();// creates window, 
+	this->CreateOpenGLWindow();
 
 	this->InitGlew();
 
@@ -50,7 +49,7 @@ void Engine::Run()
 
 	this->LoadContent(); // virtual, calls method from derived game class
 
-	while ((glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE) && (glfwWindowShouldClose(window) != GL_TRUE))
+	while (this->WindowOpen())
 	{
 		// move objects
 		this->Update((float)glfwGetTime());
@@ -61,21 +60,19 @@ void Engine::Run()
 		// render objects
 		this->Draw();  // Virtual, calls method from derived game class
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(this->window);
 		// Get and Handle user input events... should be at top?
 		glfwPollEvents();
 	}
 
 	this->UnLoadContent(); // virtual, calls method from derived game class
 
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(this->window);
 	glfwTerminate();
 }
 
 void Engine::InitGLFW()
 {
-	Engine::app = this;
-
 	//init the GLFW library
 	if (!glfwInit())
 	{
@@ -200,6 +197,13 @@ void Engine::InitGlew()
 	glDepthFunc(GL_LEQUAL);// compares if incoming depth value is <= stored depth value when updating
 }
 
+bool Engine::WindowOpen()
+{
+	return (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE) && 
+		   (glfwWindowShouldClose(window) != GL_TRUE);
+}
+
+
 void Engine::Initialize()
 {
 	strcpy_s(info.title, 128, "Game Engine");
@@ -224,8 +228,13 @@ void Engine::LoadContent()
 {
 }
 
+
+
 void Engine::Draw()
 {
+
+	
+
 }
 
 void Engine::UnLoadContent()

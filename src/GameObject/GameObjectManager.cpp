@@ -11,6 +11,9 @@
 
 namespace Azul
 {
+
+	GameObjectManager* GameObjectManager::poGameObjectManager = nullptr;
+
 	void GameObjectManager::Add(GameObject* pObj)
 	{
 		assert(pObj != 0);
@@ -25,6 +28,19 @@ namespace Azul
 		pGOM->poRootTree->Insert(pObj, pRootNode);
 	}
 
+
+	void GameObjectManager::Create()
+	{
+
+		if (GameObjectManager::poGameObjectManager == nullptr) {
+		
+			GameObjectManager::poGameObjectManager = new GameObjectManager();
+			assert(poGameObjectManager);
+		}
+		else {
+			assert(false);
+		}
+	}
 
 	void GameObjectManager::Destroy()
 	{
@@ -47,7 +63,7 @@ namespace Azul
 
 		}
 
-
+		delete pGOM->poGameObjectManager;
 	}
 
 	void GameObjectManager::Update(float currentTime)
@@ -106,7 +122,7 @@ namespace Azul
 		ModelManager::Add(pModel);
 
 		
-		ShaderManager::Add(ShaderObject::Name::NULL_SHADER, "nullRender");
+		ShaderManager::Add(ShaderObject::Name::NULL_SHADER, "Shaders/nullRender");
 
 		GraphicsObject_Null* pGraphicsObject = new GraphicsObject_Null(pModel, ShaderManager::Find(ShaderObject::Name::NULL_SHADER));
 		GameObject* pGameRoot = new GameObject(pGraphicsObject);
@@ -125,11 +141,10 @@ namespace Azul
 		delete this->poRootTree;
 	}
 
-	GameObjectManager* GameObjectManager::privGetInstance(void)
+	GameObjectManager* GameObjectManager::privGetInstance()
 	{
-		// This is where its actually stored (BSS section)
-		static GameObjectManager gom;
-		return &gom;
+		assert(poGameObjectManager != nullptr);
+		return poGameObjectManager;
 	}
 
 }

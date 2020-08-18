@@ -1,14 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Engine" Collapsed="true">
-    <Position X="1.75" Y="2" Width="1.5" />
+  <Class Name="Engine">
+    <Position X="2" Y="1" Width="2" />
+    <Members>
+      <Method Name="~Engine" Hidden="true" />
+      <Method Name="debug_callback" Hidden="true" />
+      <Method Name="glfw_onKey" Hidden="true" />
+      <Method Name="glfw_onMouseButton" Hidden="true" />
+      <Method Name="glfw_onMouseMove" Hidden="true" />
+      <Method Name="glfw_onMouseWheel" Hidden="true" />
+      <Method Name="glfw_onResize" Hidden="true" />
+      <Method Name="onDebugMessage" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Struct Name="Engine::APPINFO" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Engine\Engine.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAQAEAACgIZABwQBAIAAEIwAAAAQCAhIRGAiSAAAAAY=</HashCode>
       <FileName>Engine\Engine.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Game">
-    <Position X="1.75" Y="4.25" Width="1.5" />
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <Members>
+      <Method Name="~Game" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAQAEAAAAAIAAwAAAAAAAAAAAAiAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Game\Game.h</FileName>
@@ -16,6 +37,10 @@
   </Class>
   <Class Name="Azul::GameObjectManager">
     <Position X="4.5" Y="2" Width="2" />
+    <Members>
+      <Method Name="~GameObjectManager" Hidden="true" />
+      <Method Name="GameObjectManager" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAYAAAAAAAAEAgAABAABAAAIAABAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GameObject\GameObjectManager.h</FileName>
@@ -25,7 +50,13 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Azul::GameObject">
-    <Position X="9.75" Y="3.75" Width="1.5" />
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <Members>
+      <Method Name="~GameObject" Hidden="true" />
+      <Method Name="GameObject" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+      <Method Name="privUpdate" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AJRAAAAAIAAAAkAAAARAAIAAAIABAAAACAAhEgIAAAA=</HashCode>
       <FileName>GameObject\GameObject.h</FileName>
@@ -35,14 +66,24 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Azul::RenderMaterial">
-    <Position X="13" Y="0.75" Width="1.5" />
+    <Position X="13" Y="0.5" Width="1.75" />
+    <Members>
+      <Method Name="~RenderMaterial" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+      <Method Name="RenderMaterial" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AIAABAAAABAAAgAAAAAAEAAAAAAQAAAAAAAgAAAAAAA=</HashCode>
       <FileName>GraphicsObject\RenderMaterial.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Azul::GraphicsObject">
-    <Position X="13" Y="3.75" Width="1.5" />
+    <Position X="13" Y="3.75" Width="1.75" />
+    <Members>
+      <Method Name="~GraphicsObject" Hidden="true" />
+      <Method Name="GraphicsObject" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACABAAAAAYAAAgAAAAAAAQAABAhEAAAAAA=</HashCode>
       <FileName>GraphicsObject\GraphicsObject.h</FileName>
@@ -54,20 +95,23 @@
   </Class>
   <Class Name="Azul::ShaderObject">
     <Position X="16" Y="4.5" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="Azul::ShaderObject::Name" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Shaders\ShaderObject.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+    <Members>
+      <Method Name="~ShaderObject" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+      <Method Name="ShaderObject" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AIAAAEACAAAABAAAAAAAgAAAAABAQBAAAAAgQKAAAAA=</HashCode>
       <FileName>Shaders\ShaderObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Azul::GraphicsObject_FlatTexture">
-    <Position X="9.75" Y="8.75" Width="2.25" />
+    <Position X="9.25" Y="8.75" Width="2.25" />
+    <Members>
+      <Method Name="~GraphicsObject_FlatTexture" Hidden="true" />
+      <Method Name="GraphicsObject_FlatTexture" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AoAABAAAAJAAAgAAAAAAAACAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>GraphicsObject\GraphicsObject_FlatTexture.h</FileName>
@@ -75,6 +119,11 @@
   </Class>
   <Class Name="Azul::GraphicsObject_Wireframe">
     <Position X="12.75" Y="9" Width="2.25" />
+    <Members>
+      <Method Name="~GraphicsObject_Wireframe" Hidden="true" />
+      <Method Name="GraphicsObject_Wireframe" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AIAABAAAABAAAgAAAAAAAAAAAAAAAAgAAAAkAAAAAAA=</HashCode>
       <FileName>GraphicsObject\GraphicsObject_Wireframe.h</FileName>
@@ -82,30 +131,62 @@
   </Class>
   <Class Name="Azul::GraphicsObject_ColorByPosition">
     <Position X="15.75" Y="9" Width="2.75" />
+    <Members>
+      <Method Name="~GraphicsObject_ColorByPosition" Hidden="true" />
+      <Method Name="GraphicsObject_ColorByPosition" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AIAABAAAABAAAgAAAAAAEAABAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>GraphicsObject\GraphicsObject_ColorByPosition.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Azul::PCSNode" Collapsed="true">
-    <Position X="9.75" Y="2" Width="1.5" />
+    <Position X="9.75" Y="2.25" Width="1.5" />
+    <Members>
+      <Method Name="~PCSNode" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+      <Method Name="PCSNode" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Azul::PCSNode::Code" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Users\Andrew Richards\Perforce\Engine I\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSNode.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>QAAAAAQAhEAIAAAgAAIwKAgABgCgGAAIAMAkQEQCjAA=</HashCode>
-      <FileName>C:\Users\Andrew\Perforce\Engine_I_Laptop\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSNode.h</FileName>
+      <FileName>C:\Users\Andrew Richards\Perforce\Engine I\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSNode.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Azul::PCSTree" Collapsed="true">
+  <Class Name="Azul::PCSTree">
     <Position X="7.5" Y="2" Width="1.5" />
+    <Members>
+      <Method Name="~PCSTree" Hidden="true" />
+      <Method Name="operator=" Hidden="true" />
+      <Method Name="PCSTree" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AIAAAEABAAAAAAAAAAIABAAAAAAAAEAAAAAgoAAEAAA=</HashCode>
-      <FileName>C:\Users\Andrew\Perforce\Engine_I_Laptop\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSTree.h</FileName>
+      <FileName>C:\Users\Andrew Richards\Perforce\Engine I\keenan2020spring_gam475\student\aricha48\Game_Engine\dist\PCSTree\include\PCSTree.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="pRoot" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Azul::Model" Collapsed="true">
+  <Class Name="Azul::Model">
     <Position X="21.25" Y="3.75" Width="1.5" />
+    <Members>
+      <Field Name="next" Hidden="true" />
+      <Field Name="prev" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <NestedTypes>
       <Struct Name="Azul::Model::Vert_xyzuvn" Collapsed="true">
         <TypeIdentifier>

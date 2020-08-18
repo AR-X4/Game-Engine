@@ -23,6 +23,14 @@
     <None Include="..\dist\GLFW\lib\GLFW_X86Release.pdb">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="..\dist\imgui\lib\imgui_X86Debug.pdb">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </None>
+    <None Include="..\dist\imgui\lib\imgui_X86Release.pdb">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </None>
     <None Include="..\dist\Math\lib\Math_X86Debug.pdb">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </None>
@@ -53,7 +61,6 @@
     <None Include="Shaders\texturePointLightDiff.vs.glsl" />
     <None Include="Shaders\textureRender.fs.glsl" />
     <None Include="Shaders\textureRender.vs.glsl" />
-    <None Include="Textures\Texture.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dist\File\include\File.h" />
@@ -88,9 +95,21 @@
     <ClInclude Include="..\Framework\Framework.h" />
     <ClInclude Include="..\GLFW\include\GLFW\glfw3.h" />
     <ClInclude Include="..\GLFW\include\GLFW\glfw3native.h" />
+    <ClInclude Include="..\imgui\include\imconfig.h" />
+    <ClInclude Include="..\imgui\include\imgui.h" />
+    <ClInclude Include="..\imgui\include\imgui_impl_glfw.h" />
+    <ClInclude Include="..\imgui\include\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\imgui\include\imgui_internal.h" />
+    <ClInclude Include="..\imgui\include\imstb_rectpack.h" />
+    <ClInclude Include="..\imgui\include\imstb_textedit.h" />
+    <ClInclude Include="..\imgui\include\imstb_truetype.h" />
     <ClInclude Include="Camera\CameraManager.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Demo\Demo.h" />
+    <ClInclude Include="Editor\Editor.h" />
+    <ClInclude Include="GUI\GUIWindow.h" />
+    <ClInclude Include="GUI\GUIManager.h" />
+    <ClInclude Include="Input\InputObserver.h" />
     <ClInclude Include="Manager\DLink.h" />
     <ClInclude Include="Manager\Manager.h" />
     <ClInclude Include="Models\DiamondModel.h" />
@@ -119,14 +138,20 @@
     <ClInclude Include="Shaders\ShaderObject.h" />
     <ClInclude Include="Models\PyramidModel.h" />
     <ClInclude Include="Models\SphereModel.h" />
+    <ClInclude Include="GUI\StatsWindow.h" />
     <ClInclude Include="Textures\TextureManager.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\TGA.h" />
+    <ClInclude Include="GUI\ViewportWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera\CameraManager.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Demo\Demo.cpp" />
+    <ClCompile Include="Editor\Editor.cpp" />
+    <ClCompile Include="GUI\GUIWindow.cpp" />
+    <ClCompile Include="GUI\GUIManager.cpp" />
+    <ClCompile Include="Input\InputObserver.cpp" />
     <ClCompile Include="Manager\DLink.cpp" />
     <ClCompile Include="Manager\Manager.cpp" />
     <ClCompile Include="Models\DiamondModel.cpp" />
@@ -155,8 +180,10 @@
     <ClCompile Include="Shaders\ShaderObject.cpp" />
     <ClCompile Include="Models\PyramidModel.cpp" />
     <ClCompile Include="Models\SphereModel.cpp" />
+    <ClCompile Include="GUI\StatsWindow.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
     <ClCompile Include="Textures\TextureManager.cpp" />
+    <ClCompile Include="GUI\ViewportWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\dist\File\lib\File_X86Debug.lib">
@@ -170,6 +197,14 @@
     </Library>
     <Library Include="..\dist\GLFW\lib\GLFW_X86Release.lib">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\dist\imgui\lib\imgui_X86Debug.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\dist\imgui\lib\imgui_X86Release.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </Library>
     <Library Include="..\dist\Math\lib\Math_X86Debug.lib">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -202,6 +237,9 @@
     </ProjectReference>
     <ProjectReference Include="..\GLFW\GLFW.vcxproj">
       <Project>{1e4503c4-419b-498d-a9b4-8fdfa7e7733c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\imgui\imgui.vcxproj">
+      <Project>{61789038-0ea0-4358-bed6-8d4a7dc4751d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Math\Math.vcxproj">
       <Project>{d999076e-f08b-48fc-b732-e43e13041a07}</Project>
@@ -275,9 +313,11 @@
       <UseUnicodeForAssemblerListing>false</UseUnicodeForAssemblerListing>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(SolutionDir)dist\GLFW\include;$(SolutionDir)dist\SB7\include;$(SolutionDir)dist\File\include;$(SolutionDir)dist\PCSTree\include;$(SolutionDir)dist\Math\include;$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(SolutionDir)dist\GLFW\include;$(SolutionDir)dist\imgui\include;$(SolutionDir)dist\SB7\include;$(SolutionDir)dist\File\include;$(SolutionDir)dist\PCSTree\include;$(SolutionDir)dist\Math\include;$(ProjectDir)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>Framework.h</ForcedIncludeFiles>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>Default</LanguageStandard>
+      <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -308,9 +348,11 @@
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(SolutionDir)dist\GLFW\include;$(SolutionDir)dist\SB7\include;$(SolutionDir)dist\File\include;$(SolutionDir)dist\PCSTree\include;$(SolutionDir)dist\Math\include;$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(SolutionDir)dist\GLFW\include;$(SolutionDir)dist\imgui\include;$(SolutionDir)dist\SB7\include;$(SolutionDir)dist\File\include;$(SolutionDir)dist\PCSTree\include;$(SolutionDir)dist\Math\include;$(ProjectDir)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>Framework.h</ForcedIncludeFiles>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
