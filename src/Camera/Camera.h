@@ -4,6 +4,7 @@
 
 #include "MathEngine.h"
 #include "Manager/DLink.h"
+#include "BoundingVolume/BoundingSphere.h"
 
 
 namespace Azul
@@ -22,6 +23,12 @@ namespace Azul
 			Cam3,
 			UNINITIALIZED
 
+		};
+
+		enum class CullResult
+		{
+			CULL_INSIDE,
+			CULL_OUTSIDE
 		};
 
 
@@ -75,7 +82,9 @@ namespace Azul
 		void getFarBottomLeft(Vect& vOut) const;
 		void getFarBottomRight(Vect& vOut) const;
 
+		CullResult CullTest(const Sphere& Sphere);
 
+		//Dlink functions
 		void SetName(Name NameIn);
 		void Dump();
 		void Wash();
@@ -155,6 +164,7 @@ namespace Azul
 		
 
 		Name CamName;
+		char pad[12];
 
 	};
 

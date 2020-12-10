@@ -1,5 +1,3 @@
-
-
 #ifndef MATH_ENGINE_H
 #define MATH_ENGINE_H
 
@@ -8,11 +6,9 @@
 #include "Constants.h"
 #include "Vect.h"
 #include "Matrix.h"
+#include "Quat.h"
 #include "Trig.h"
+#include "Debug.h"
 
-// Defines here:
-#define eq	Util::isEqual 
 
 #endif
-
-// ---  End of File ---------------

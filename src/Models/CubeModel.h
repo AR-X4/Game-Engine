@@ -3,11 +3,11 @@
 #ifndef CUBE_MODEL_H
 #define CUBE_MODEL_H
 
-#include "Model.h"
+#include "PrimitiveModel.h"
 
 namespace Azul
 {
-	class CubeModel : public Model
+	class CubeModel : public PrimitiveModel
 	{
 	public:
 		CubeModel(const char* const pModelFileName);

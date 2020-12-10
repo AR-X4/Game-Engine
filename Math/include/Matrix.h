@@ -7,12 +7,12 @@
 
 namespace Azul
 {
-	//Align instances to 16 bytes for anonymous union data struct
-	class Matrix final : public Align16Math
+	class Quat;
+
+	class Matrix final : public Align16
 	{
 	public:
 
-		//---Enums---
 		enum class Special
 		{
 			Zero,
@@ -35,7 +35,6 @@ namespace Azul
 		{
 			XYZ
 		};
-
 
 		enum class Rot
 		{
@@ -62,16 +61,16 @@ namespace Azul
 			// future combos... here
 		};
 
-	//public:
+	public:
 
 		//---Big Four---
 		Matrix();
-		Matrix(const Matrix & tmp); // copy constructor
-		Matrix& operator=(const Matrix & tmp);// move assignment operator
+		Matrix(const Matrix& tmp); // copy constructor
+		Matrix& operator=(const Matrix& tmp);// move assignment operator
 		~Matrix() = default;
 
 		//---Specialized Constructors---
-		Matrix(const Vect & tv0, const Vect & tv1, const Vect & tv2, const Vect & tv3);
+		Matrix(const Vect& tv0, const Vect& tv1, const Vect& tv2, const Vect& tv3);
 		Matrix(const Orient InEnum, const Vect& zAxisIn, const Vect& yAxisIn);//constructor with world orientation
 		Matrix(const Rot, const Vect& RotAxis, const float& RotAngle);
 		Matrix(const Rot1 InEnum, const float& RotAngle);
@@ -81,6 +80,7 @@ namespace Azul
 		Matrix(const Scale, const float& ScaleX, const float& ScaleY, const float& ScaleZ);
 		Matrix(const Scale, const Vect& ScaleV);
 		Matrix(const Special InEnum);
+		Matrix(const Quat& rotMatrix);
 
 		//---Math Functions---
 		float det() const;		   //Determinent
@@ -91,9 +91,8 @@ namespace Azul
 		Matrix getAdjugate() const;//Get Adjugate
 
 		//---Checks---
-		const bool isIdentity(const float& ep) const;
-		const bool isIdentity() const;
-		const bool isEqual(const Matrix& t) const;
+		const bool isIdentity(const float& ep = MATH_TOLERANCE) const;
+		const bool isEqual(const Matrix& t, const float& ep = MATH_TOLERANCE) const;
 
 		//---Setters---
 		Matrix& set(const Special InEnum);
@@ -104,53 +103,54 @@ namespace Azul
 		Matrix& set(const Rot1 InEnum, const float& RotAngle);
 		Matrix& set(const Row InEnum, const Vect& RowV);
 		Matrix& set(const Rot3, const float& RotX, const float& RotY, const float& RotZ);
-		Matrix& set(const Rot, Vect& RotAxis, const float& RotAngle);
+		Matrix& set(const Rot, const Vect& RotAxis, const float& RotAngle);
 		Matrix& set(const Orient InEnum, const Vect& DOF, const Vect& yAxis);
 		Matrix& set(const Vect& Row0, const Vect& Row1, const Vect& Row2, const Vect& Row3);
+		Matrix& set(const Quat& rot);
 
 		//---Getters---
 		Vect get(const Row InEnum) const;
 
 		//---Overloaded Operators---
-		Matrix operator * (const Matrix & t) const;
-		Matrix operator * (const float& s)   const;
-		Matrix operator + (const Matrix& t)  const;
-		Matrix operator - (const Matrix& t)  const;
+		const Matrix operator * (const Matrix& t) const;
+		const Matrix operator * (const float& s)   const;
+		const Matrix operator + (const Matrix& t)  const;
+		const Matrix operator - (const Matrix& t)  const;
 		Matrix& operator += (const Matrix& t);
 		Matrix& operator -= (const Matrix& t);
 		Matrix& operator *= (const Matrix& t);
 		Matrix& operator *= (const float& s);
 		//unary
-		Matrix operator + () const;
-		Matrix operator - () const;
+		const Matrix operator + () const;
+		const Matrix operator - () const;
 
-		float& operator [] (const m0_enum );
-		float& operator [] (const m1_enum );
-		float& operator [] (const m2_enum );
-		float& operator [] (const m3_enum );
-		float& operator [] (const m4_enum );
-		float& operator [] (const m5_enum );
-		float& operator [] (const m6_enum );
-		float& operator [] (const m7_enum );
-		float& operator [] (const m8_enum );
-		float& operator [] (const m9_enum );
+		float& operator [] (const m0_enum);
+		float& operator [] (const m1_enum);
+		float& operator [] (const m2_enum);
+		float& operator [] (const m3_enum);
+		float& operator [] (const m4_enum);
+		float& operator [] (const m5_enum);
+		float& operator [] (const m6_enum);
+		float& operator [] (const m7_enum);
+		float& operator [] (const m8_enum);
+		float& operator [] (const m9_enum);
 		float& operator [] (const m10_enum);
 		float& operator [] (const m11_enum);
 		float& operator [] (const m12_enum);
 		float& operator [] (const m13_enum);
 		float& operator [] (const m14_enum);
 		float& operator [] (const m15_enum);
-		
-		const float operator [] (const m0_enum ) const;
-		const float operator [] (const m1_enum ) const;
-		const float operator [] (const m2_enum ) const;
-		const float operator [] (const m3_enum ) const;
-		const float operator [] (const m4_enum ) const;
-		const float operator [] (const m5_enum ) const;
-		const float operator [] (const m6_enum ) const;
-		const float operator [] (const m7_enum ) const;
-		const float operator [] (const m8_enum ) const;
-		const float operator [] (const m9_enum ) const;
+
+		const float operator [] (const m0_enum) const;
+		const float operator [] (const m1_enum) const;
+		const float operator [] (const m2_enum) const;
+		const float operator [] (const m3_enum) const;
+		const float operator [] (const m4_enum) const;
+		const float operator [] (const m5_enum) const;
+		const float operator [] (const m6_enum) const;
+		const float operator [] (const m7_enum) const;
+		const float operator [] (const m8_enum) const;
+		const float operator [] (const m9_enum) const;
 		const float operator [] (const m10_enum) const;
 		const float operator [] (const m11_enum) const;
 		const float operator [] (const m12_enum) const;
@@ -177,23 +177,22 @@ namespace Azul
 		float& m14();
 		float& m15();
 
-		float m0() const;
-		float m1() const;
-		float m2() const;
-		float m3() const;
-		float m4() const;
-		float m5() const;
-		float m6() const;
-		float m7() const;
-		float m8() const;
-		float m9() const;
-		float m10() const;
-		float m11() const;
-		float m12() const;
-		float m13() const;
-		float m14() const;
-		float m15() const;
-		
+		const float m0() const;
+		const float m1() const;
+		const float m2() const;
+		const float m3() const;
+		const float m4() const;
+		const float m5() const;
+		const float m6() const;
+		const float m7() const;
+		const float m8() const;
+		const float m9() const;
+		const float m10() const;
+		const float m11() const;
+		const float m12() const;
+		const float m13() const;
+		const float m14() const;
+		const float m15() const;
 
 	private:
 
@@ -206,7 +205,6 @@ namespace Azul
 		void SetRotation(const float& RotX, const float& RotY, const float& RotZ);
 		void SetAxisRotation(const Rot1 InEnum, const float& RotAngle);
 
-		//---Data---
 		union
 		{
 			struct

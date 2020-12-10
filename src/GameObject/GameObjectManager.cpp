@@ -3,6 +3,7 @@
 #include "GraphicsObject/GraphicsObject_Null.h"
 
 #include "GameObject/GameObject.h"
+#include "GameObject/GameObjectRigid.h"
 #include "GameObject/GameObjectManager.h"
 #include "PCSTreeForwardIterator.h"
 
@@ -14,18 +15,16 @@ namespace Azul
 
 	GameObjectManager* GameObjectManager::poGameObjectManager = nullptr;
 
-	void GameObjectManager::Add(GameObject* pObj)
+	void GameObjectManager::Add(GameObject* pObj, GameObject* pParent)
 	{
 		assert(pObj != 0);
+		assert(pParent != 0);
 
 		// Get singleton
 		GameObjectManager* pGOM = GameObjectManager::privGetInstance();
 
-		// Get root node
-		PCSNode* pRootNode = pGOM->poRootTree->GetRoot();
-
 		// insert object to root
-		pGOM->poRootTree->Insert(pObj, pRootNode);
+		pGOM->poRootTree->Insert(pObj, pParent);
 	}
 
 
@@ -66,7 +65,7 @@ namespace Azul
 		delete pGOM->poGameObjectManager;
 	}
 
-	void GameObjectManager::Update(float currentTime)
+	void GameObjectManager::Update(Time currentTime)
 	{
 		GameObjectManager* pGOM = GameObjectManager::privGetInstance();
 		assert(pGOM);
@@ -74,7 +73,7 @@ namespace Azul
 		PCSNode* pRootNode = pGOM->poRootTree->GetRoot();
 		assert(pRootNode);
 
-		PCSTreeForwardIterator pForwardIter(pRootNode);
+		PCSTreeForwardIterator pForwardIter(pRootNode->GetChild());
 		PCSNode* pNode = pForwardIter.First();
 
 		GameObject* pGameObj = 0;
@@ -108,7 +107,15 @@ namespace Azul
 			assert(pNode);
 			// Update the game object
 			pGameObj = (GameObject*)pNode;
-			pGameObj->Draw();
+
+			if (pGameObj->GetDrawEnable())
+			{
+				pGameObj->Draw();
+			}
+			else
+			{
+				//assert(0);
+			}
 
 			pNode = pForwardIter.Next();
 		}
@@ -125,7 +132,8 @@ namespace Azul
 		ShaderManager::Add(ShaderObject::Name::NULL_SHADER, "Shaders/nullRender");
 
 		GraphicsObject_Null* pGraphicsObject = new GraphicsObject_Null(pModel, ShaderManager::Find(ShaderObject::Name::NULL_SHADER));
-		GameObject* pGameRoot = new GameObject(pGraphicsObject);
+
+		GameObjectRigid* pGameRoot = new GameObjectRigid(pGraphicsObject);
 		pGameRoot->SetName("GameObject_Root");
 
 		// Create the tree
@@ -134,6 +142,29 @@ namespace Azul
 
 		// Attach the root node
 		this->poRootTree->Insert(pGameRoot, this->poRootTree->GetRoot());
+	}
+
+
+	PCSTree* GameObjectManager::GetPCSTree()
+	{
+		// Get singleton
+		GameObjectManager* pGOM = GameObjectManager::privGetInstance();
+		assert(pGOM);
+
+		// Get root node
+		return pGOM->poRootTree;
+	}
+
+	GameObject* GameObjectManager::GetRoot()
+	{
+		// Get singleton
+		GameObjectManager* pGOM = GameObjectManager::privGetInstance();
+		assert(pGOM);
+
+		GameObject* pGameObj = (GameObject*)pGOM->poRootTree->GetRoot();
+		assert(pGameObj);
+
+		return pGameObj;
 	}
 
 	GameObjectManager::~GameObjectManager()

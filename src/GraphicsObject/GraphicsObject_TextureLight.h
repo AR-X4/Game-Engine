@@ -12,7 +12,7 @@ namespace Azul
 	class GraphicsObject_TextureLight : public GraphicsObject
 	{
 	public:
-		GraphicsObject_TextureLight(Model* _pModel, ShaderObject* _pShaderObj, TextureManager::Name  _name, Vect& LightColor, Vect& LightPos);
+		GraphicsObject_TextureLight(Model* _pModel, ShaderObject* _pShaderObj, Vect& LightColor, Vect& LightPos, TextureManager::Name  _name = TextureManager::Name::DEFAULT);
 
 		GraphicsObject_TextureLight() = delete;
 		GraphicsObject_TextureLight(const GraphicsObject_TextureLight&) = delete;

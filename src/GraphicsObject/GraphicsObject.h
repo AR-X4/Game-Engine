@@ -1,5 +1,3 @@
-
-
 #ifndef GRAPHICS_OBJECT_H
 #define GRAPHICS_OBJECT_H
 
@@ -7,6 +5,7 @@
 #include "Shaders/ShaderObject.h"
 #include "RenderMaterial.h"
 #include "Models/Model.h"
+#include "BoundingVolume/BoundingSphere.h"
 
 namespace Azul
 {
@@ -26,7 +25,13 @@ namespace Azul
 		const Model* GetModel() const;
 		Matrix& GetWorld();
 
+		Sphere* GetBoundingSphereForCollision();
+
+	private:
+		void privUpdateBoundingSphereForCollision();
+
 	protected:
+		Sphere* poCurrSphere;
 		const Model* pModel;
 		Matrix* poWorld;
 		const ShaderObject* pShaderObj;

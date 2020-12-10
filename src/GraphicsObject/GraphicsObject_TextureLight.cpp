@@ -8,7 +8,7 @@
 namespace Azul
 {
 
-	GraphicsObject_TextureLight::GraphicsObject_TextureLight(Model* _pModel, ShaderObject* _pShaderObj, TextureManager::Name _name, Vect& LightColor, Vect& LightPos)
+	GraphicsObject_TextureLight::GraphicsObject_TextureLight(Model* _pModel, ShaderObject* _pShaderObj, Vect& LightColor, Vect& LightPos, TextureManager::Name  _name)
 		: GraphicsObject(_pModel, _pShaderObj),
 		textName(_name)
 	{

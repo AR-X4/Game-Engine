@@ -5,7 +5,7 @@
 namespace Azul
 {
 	NullModel::NullModel(const char* const modelFileName)
-		: Model()
+		: Model(Name::NULLMODEL)
 	{
 		AZUL_UNUSED_VAR(modelFileName);
 	}
@@ -15,10 +15,7 @@ namespace Azul
 		// remove anything dynamic here
 	}
 
-	void NullModel::privCreateVAO(const char* const modelFileName)
-	{
-		AZUL_UNUSED_VAR(modelFileName);
-	}
+
 }
 
 // --- End of File ---

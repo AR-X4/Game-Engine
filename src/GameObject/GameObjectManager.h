@@ -13,9 +13,11 @@ namespace Azul
 	class GameObjectManager
 	{
 	public:
-		static void Add(GameObject* pObj);
+		static void Add(GameObject* pObj, GameObject* pParent);
 		static void Draw(void);
-		static void Update(float currentTime);
+		static void Update(Time currentTime);
+		static GameObject* GetRoot(void);
+		static PCSTree* GetPCSTree();
 
 		static void Create();
 		static void Destroy();

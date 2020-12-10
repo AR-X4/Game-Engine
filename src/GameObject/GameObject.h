@@ -5,6 +5,7 @@
 #include "MathEngine.h"
 #include "GraphicsObject/GraphicsObject.h"
 #include "PCSNode.h"
+#include "Time/Time.h"
 
 namespace Azul
 {
@@ -12,38 +13,35 @@ namespace Azul
 	class GameObject : public PCSNode
 	{
 	public:
+		GameObject(GraphicsObject* graphicsObject);
+
+		// Big four
 		GameObject() = delete;
 		GameObject(const GameObject&) = delete;
-		GameObject& operator = (const GameObject&) = delete;
+		GameObject& operator=(GameObject&) = delete;
 		virtual ~GameObject();
 
-		GameObject(GraphicsObject* graphicsObject);  
+		virtual void Draw();
+		virtual void Update(Time currentTime) = 0;
 
-		void Update(float t);
-		void Draw();
-
-		// Set / Get:
 		GraphicsObject* GetGraphicsObject();
 		Matrix* GetWorld();
+		void SetWorld(Matrix* _pWorld);
+		bool GetDrawEnable();
+		void SetDrawEnable(bool);
 
-		void SetWorld(Matrix* pWorld);
-		void SetPos(const Vect& pos);
-		void SetScale(const Vect& scale);
-		void SetDeltaRot(float delta);
+		
 
 	protected:
 		Matrix* poWorld;
-		Vect* poTrans;
+		//void baseUpdateBoundingSphere();
 
-	private:
-		void privUpdate(float t);
-
+	protected:
+		//Sphere* pSphere;
 		GraphicsObject* poGraphicsObject;
-		Vect* poScale;
-
-		float           deltaRot;
-		float			rotY;
-		float			rotZ;
+		bool mDrawEnable;
+		char pad[3];
+		
 	};
 }
 

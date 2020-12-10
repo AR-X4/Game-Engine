@@ -1,14 +1,14 @@
 #ifndef PYRAMID_MODEL_H
 #define PYRAMID_MODEL_H
 
-#include "Model.h"
+#include "PrimitiveModel.h"
 
 namespace Azul
 {
 
 
 
-	class PyramidModel : public Model
+	class PyramidModel : public PrimitiveModel
 	{
 	public:
 

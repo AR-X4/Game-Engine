@@ -159,6 +159,24 @@ namespace Azul
 		glGenBuffers(1, &this->vbo_1);
 		assert(this->vbo_1 != 0);
 
+
+		/*----------------------------------------------------------------------------------
+
+		Find Bounding Volume - quick hack
+			 MOVE this to converter!!!!!
+			Vect * pVerts = new Vect[(unsigned int)this->numVerts];
+		for (int i = 0; i < this->numVerts; i++)
+		{
+			pVerts[i].set(pCubeData[i].x, pCubeData[i].y, pCubeData[i].z);
+			Trace::out("%d:  %f %f %f\n", i, pVerts[i][x], pVerts[i][y], pVerts[i][z]);
+		}
+
+		assert(this->poRefSphere);
+		this->poRefSphere->RitterSphere(pVerts, this->numVerts);
+		Trace::out("Ritter: cntr:%f %f %f  rad: %f ", this->poRefSphere->cntr[x], this->poRefSphere->cntr[y], this->poRefSphere->cntr[z], this->poRefSphere->rad);
+
+		delete[] pVerts;*/
+
 		// Load the combined data: ---------------------------------------------------------
 
 		glBindBuffer(GL_ARRAY_BUFFER, this->vbo_0);
@@ -2097,7 +2115,7 @@ namespace Azul
 	}
 
 	SphereModel::SphereModel(const char* const pModelFileName)
-		: Model()
+		: PrimitiveModel(Name::SPHERE)
 	{
 
 		this->CreateSphere();

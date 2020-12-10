@@ -1,8 +1,6 @@
+#include "MathEngine.h"
 
-
-#include "Util.h"
-
- namespace Azul
+namespace Azul
 {
 	bool Util::isEqual(const float a, const float b, const float epsilon)
 	{
@@ -35,5 +33,3 @@
 		return ((a >= -epsilon) && (a <= epsilon));
 	}
 }
-
-// ---  End of File ---------------

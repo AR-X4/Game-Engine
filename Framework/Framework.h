@@ -77,12 +77,17 @@
 //    v.3.28  - code analysis warning
 //    v.3.29  - warning for new 19.25 compiler that's not honored in earlier
 //    v.3.30  - macro collison... prefix macros with AZUL
+//    v.3.31  - support malloc(),calloc(),realloc(),free() and placement new macros
+//    v.3.32  - fix warnings new compiler 10.0.19041.0
+//    v.3.33  - UnitTestMemoryCheck macros
+//    v.3.34  - added ApplicationMemLeakCount() and MemMailBox.bin
+//    v.3.35  - warning fix on MemMailBox.bin
 //----------------------------------------------------------------------------- 
 
 #ifndef FRAMEWORK_H
 #define FRAMEWORK_H
 
-#define FRAMEWORK_VER "3.30"
+#define FRAMEWORK_VER "3.35"
 
 // --------------------------------------------------------
 // General Guidelines
@@ -235,6 +240,7 @@
 //
 // -----------------------------------------------------------------------
 
+
 #ifndef MEM_TRACKER_H
 #define MEM_TRACKER_H
 
@@ -261,12 +267,15 @@
 		//
 		//      example:  Dog *pDog = new(address) Dog();  // original (new way below)
 		//
-		//      #pragma warning( push )   <----- Add 1/3 --------------
-		//      #undef new                <----- Add 2/3 --------------
+		//      AZUL_PLACEMENT_NEW_BEGIN   <----- Add 1/3 --------------
+		//      #undef new                 <----- Add 2/3 --------------
 		//
 		//              Dog *pDog = new(address) Dog();
 		//
-		//      #pragma warning( pop )    <----- Add 3/3 --------------
+		//      AZUL_PLACEMENT_NEW_END     <----- Add 3/3 --------------
+		//
+		//      Note: 
+		//           Need to have matching BEGIN/END macros or an assert will happen
 		//
 		//   Issue with new(std::nothrow)
 		//      This needs to be tracked... but the macro trick is a problem
@@ -322,6 +331,7 @@
 			MemTrace() noexcept
 			{
 				memset(&privBuff[0], 0, MemTraceBuffSize);
+				this->PlacementNew_Count = 0;
 			}
 			MemTrace(const MemTrace &) = delete;
 			MemTrace(MemTrace &&) = delete;
@@ -331,12 +341,11 @@
 
 		private:
 			// displays a printf to the output window
-			void privOut(const char * const fmt, ...)
+			void privOut(const char * const fmt, ...) noexcept
 			{
-				MemTrace *pTrace = MemTrace::privGetInstance();
-				assert(pTrace);
+				MemTrace &rTrace = MemTrace::privGetRefInstance();
 
-				pTrace->mtx.lock();
+				std::lock_guard<std::mutex> lck(rTrace.mtx);
 
 				va_list args;
 
@@ -346,18 +355,16 @@
 					va_start(args, fmt);
 				#pragma warning( pop )
 
-				vsprintf_s(&pTrace->privBuff[0], MemTraceBuffSize, fmt, args);
-				OutputDebugString(&pTrace->privBuff[0]);
+				vsprintf_s(&rTrace.privBuff[0], MemTraceBuffSize, fmt, args);
+				OutputDebugString(&rTrace.privBuff[0]);
 
 				// va_end(args); - original.. below to new code
 				args = static_cast<va_list> (nullptr);
-
-				pTrace->mtx.unlock();
 			}
 
 			char *privStripDir( const char * const pInName) noexcept
 			{
-				char *pReturn = (char *)pInName;
+				char *pReturn = (char *) (pInName);
 
 				const char *pch = pInName;
 
@@ -374,12 +381,12 @@
 				return pReturn;
 			}
 
-			void privDisplayLogLink()
+			void privDisplayLogLink() noexcept
 			{
 				char sBuff[MemTrace::MemStringSize] = { 0 };
 				GetCurrentDirectory(MemTrace::MemStringSize, sBuff);
 
-				const char *pch = sBuff;
+				const char *pch = &sBuff[0];
 				char *pSlash = nullptr;
 
 				while (pch != nullptr)
@@ -392,7 +399,7 @@
 					}
 				}
 
-				const size_t numBytes = (size_t)(pSlash - sBuff);
+				const size_t numBytes = (size_t) (pSlash - sBuff);
 
 				char pBuff[MemTrace::MemStringSize] = { 0 };
 				memcpy_s(pBuff, MemTrace::MemStringSize, sBuff, numBytes);
@@ -411,10 +418,25 @@
 			}
 
 		public:
+			static int ApplicationMemLeakCount() noexcept
+			{
+				FILE* pMailBoxFile = nullptr;
+				int val = 0;
+				char pStringMailBox[MemTrace::MemStringSize] = MEMORY_LOGS_DIR;
+				strcat_s(pStringMailBox, MemTrace::MemStringSize, "Logs\\MemMailBox.bin");
+				fopen_s(&pMailBoxFile, pStringMailBox, "rb");
+				if (pMailBoxFile != nullptr)
+				{
+					fread_s(&val, sizeof(int), sizeof(int), 1, pMailBoxFile);
+					fclose(pMailBoxFile);
+				}
+				return val;
+			}
+
 			static int LeakCount() noexcept
 			{
 #if defined(_DEBUG) && defined(MEM_TRACKER_ENABLED)
-				_CrtMemState state;
+				_CrtMemState state{ 0 };
 				_CrtMemCheckpoint(&state);
 
 				_CrtMemBlockHeader* pTmp;
@@ -445,16 +467,18 @@
 
 			static void ProcessEnd() noexcept
 			{
-				MemTrace *pTrace = MemTrace::privGetInstance();
-
+				MemTrace &rTrace = MemTrace::privGetRefInstance();
+			
+		
 				// This is included so you can have one universal include
-				std::call_once(pTrace->ProcessEndFlag, [pTrace]()
+				std::call_once(rTrace.ProcessEndFlag, [&rTrace]() noexcept
 					{
 						FILE* pFile = nullptr;
-
+						FILE* pMailBoxFile = nullptr;
 #ifndef MEMORY_LOGS_DIR
 						system("if not exist .\\..\\Logs mkdir .\\..\\Logs");
 						fopen_s(&pFile, ".\\..\\Logs\\MemTrackerLog.txt", "w");
+						fopen_s(&pMailBoxFile, ".\\..\\Logs\\MemMailBox.txt", "w");
 #else
 						char pString[MemTrace::MemStringSize] = "\"";
 						strcat_s(pString, MemTrace::MemStringSize, MEMORY_LOGS_DIR);
@@ -469,6 +493,10 @@
 						char pString2[MemTrace::MemStringSize] = MEMORY_LOGS_DIR;
 						strcat_s(pString2, MemTrace::MemStringSize, "Logs\\MemTrackerLog.txt");
 						fopen_s(&pFile, pString2, "w");
+
+						char pStringMailBox[MemTrace::MemStringSize] = MEMORY_LOGS_DIR;
+						strcat_s(pStringMailBox, MemTrace::MemStringSize, "Logs\\MemMailBox.bin");
+						fopen_s(&pMailBoxFile, pStringMailBox, "wb");
 #endif
 
 						assert(pFile);
@@ -490,7 +518,7 @@
 						_CrtMemState state;
 						_CrtMemCheckpoint(&state);
 
-						pTrace->privOut("\n");
+						rTrace.privOut("\n");
 						_CrtMemBlockHeader *pTmp;
 						pTmp = reinterpret_cast<MemTrace::_CrtMemBlockHeader *> (state.pBlockHeader);
 
@@ -525,13 +553,26 @@
 							pTmp = pTmp->pBlockHeaderNext;
 						}
 						
+						if (MemTrace::GetPlacementNewCount() != 0)
+						{
+							rTrace.privOut("--------------------------------\n");
+							printf("--------------------------------\n");
+
+							rTrace.privOut(">>> CRASH: placement new macro mismatch <<<<<<\n");
+							printf(">>> CRASH: placement new macro mismatch <<<<<<\n");
+							rTrace.privOut("--------------------------------\n");
+							printf("--------------------------------\n");
+
+							assert(MemTrace::GetPlacementNewCount() == 0);
+						}
+
 						if (NormBlockLeakCount > 0)
 						{
-							pTrace->privOut("------------------------------------------------------\n");
-							pTrace->privOut(">>>   Memory Tracking: Leaks detected              <<<\n");
-							pTrace->privOut(">>>   Double click on file string to Leak location <<<\n");
-							pTrace->privOut("------------------------------------------------------\n");
-							pTrace->privOut("\n");
+							rTrace.privOut("------------------------------------------------------\n");
+							rTrace.privOut(">>>   Memory Tracking: Leaks detected              <<<\n");
+							rTrace.privOut(">>>   Double click on file string to Leak location <<<\n");
+							rTrace.privOut("------------------------------------------------------\n");
+							rTrace.privOut("\n");
 
 							while (pTmp != nullptr)
 							{
@@ -564,9 +605,9 @@
 											pAppMaxTmp = pTmp;
 										}
 
-										pTrace->privOut("Leak(%d)  %d bytes ref:%d %s \n", i, pTmp->nDataSize, pTmp->lRequest, pTrace->privStripDir(pTmp->szFileName));
-										pTrace->privOut("   %s(%d) : <Double Click> \n", pTmp->szFileName, pTmp->nLine);
-										pTrace->privOut("\n");
+										rTrace.privOut("Leak(%d)  %d bytes ref:%d %s \n", i, pTmp->nDataSize, pTmp->lRequest, rTrace.privStripDir(pTmp->szFileName));
+										rTrace.privOut("   %s(%d) : <Double Click> \n", pTmp->szFileName, pTmp->nLine);
+										rTrace.privOut("\n");
 									}
 
 									i++;
@@ -574,23 +615,23 @@
 								pTmp = pTmp->pBlockHeaderPrev;
 							}
 
-							pTrace->privOut("Memory Tracking statistics \n");
-							pTrace->privOut("\n");
-							pTrace->privOut("     Application files: \n");
-							pTrace->privOut("                num of leaks: %d \n", appCount);
-							pTrace->privOut("          total bytes leaked: %d \n", appTotalSize);
+							rTrace.privOut("Memory Tracking statistics \n");
+							rTrace.privOut("\n");
+							rTrace.privOut("     Application files: \n");
+							rTrace.privOut("                num of leaks: %d \n", appCount);
+							rTrace.privOut("          total bytes leaked: %d \n", appTotalSize);
 							if (pAppMaxTmp != nullptr)
 							{
-								pTrace->privOut("          largest individual: Leak(%d) size: %d \n", appMaxIndex, pAppMaxTmp->nDataSize);
+								rTrace.privOut("          largest individual: Leak(%d) size: %d \n", appMaxIndex, pAppMaxTmp->nDataSize);
 							}
-							pTrace->privOut("\n");
-							pTrace->privOut("     External Libs: \n");
-							pTrace->privOut("                num of leaks: %d \n", extCount);
-							pTrace->privOut("          total bytes leaked: %d \n", extTotalSize);
+							rTrace.privOut("\n");
+							rTrace.privOut("     External Libs: \n");
+							rTrace.privOut("                num of leaks: %d \n", extCount);
+							rTrace.privOut("          total bytes leaked: %d \n", extTotalSize);
 
 							if (pExtMaxTmp != nullptr)
 							{
-								pTrace->privOut("          largest individual: Leak(%d) size: %d \n", extMaxIndex, pExtMaxTmp->nDataSize);
+								rTrace.privOut("          largest individual: Leak(%d) size: %d \n", extMaxIndex, pExtMaxTmp->nDataSize);
 							}
 							if (pFile != nullptr)
 							{
@@ -623,34 +664,40 @@
 								fprintf(pFile, "    %d bytes in %d Ignore Blocks \n", (int)state.lSizes[_IGNORE_BLOCK], (int)state.lCounts[_IGNORE_BLOCK]);
 								fprintf(pFile, "    %d bytes in %d Client Blocks \n", (int)state.lSizes[_CLIENT_BLOCK], (int)state.lCounts[_CLIENT_BLOCK]);
 							}
-							pTrace->privDisplayLogLink();
+							rTrace.privDisplayLogLink();
 						
 						}
-
-						//pTrace->privOut("\n");
-						pTrace->privOut("--------------------------------\n");
-						//printf("\n");
+	
+						rTrace.privOut("--------------------------------\n");
 						printf("--------------------------------\n");
 						if (appCount)
 						{
-							pTrace->privOut(">>> Memory Tracking: FAIL <<<<<<\n");
+							rTrace.privOut(">>> Memory Tracking: FAIL <<<<<<\n");
 							printf(">>> Memory Tracking: FAIL <<<<<<\n");
 						}
 						else 
 						{
-							pTrace->privOut("    Memory Tracking: passed \n");
+							rTrace.privOut("    Memory Tracking: passed \n");
 							printf("    Memory Tracking: passed \n");
 						}
-						pTrace->privOut("--------------------------------\n");
-						pTrace->privOut("    Memory Tracking: end()      \n");
-						pTrace->privOut("--------------------------------\n");
+						rTrace.privOut("--------------------------------\n");
+						rTrace.privOut("    Memory Tracking: end()      \n");
+						rTrace.privOut("--------------------------------\n");
 						printf("--------------------------------\n");
 						printf("    Memory Tracking: end()      \n");
 						printf("--------------------------------\n");
 						printf("\n");
 
 						//_CrtMemDumpStatistics(&state);
-
+						assert(pMailBoxFile);
+						if (pMailBoxFile != nullptr)
+						{
+							fwrite(&appCount,sizeof(int),1,pMailBoxFile);
+						}
+						if (pMailBoxFile != nullptr)
+						{
+							fclose(pMailBoxFile);
+						}
 						if (pFile != nullptr)
 						{
 							fclose(pFile);
@@ -662,21 +709,21 @@
 
 			static void ProcessBegin() noexcept
 			{
-				MemTrace *pTrace = MemTrace::privGetInstance();
+				MemTrace &rTrace = MemTrace::privGetRefInstance();
 
 				// This is included so you can have one universal include
-				std::call_once(pTrace->ProcessBeginFlag, [pTrace]()
+				std::call_once(rTrace.ProcessBeginFlag, [&rTrace]() noexcept
 					{
-						pTrace->privOut("\n");
-						pTrace->privOut("****************************************\n");
-						pTrace->privOut("**      Framework: %s               **\n", FRAMEWORK_VER);
-						pTrace->privOut("**   C++ Compiler: %d          **\n", _MSC_FULL_VER);
-						pTrace->privOut("**  Tools Version: %s        **\n", TOOLS_VERSION);
-						pTrace->privOut("**    Windows SDK: %s       **\n", WINDOWS_TARGET_PLATFORM);
-						pTrace->privOut("**   Mem Tracking: %s   **\n", MEMORY_TRACKING_ENABLE_STRING);
-						pTrace->privOut("**           Mode: %s        **\n", BUILD_CONFIG_MODE);
-						pTrace->privOut("****************************************\n");
-						pTrace->privOut("\n");
+						rTrace.privOut("\n");
+						rTrace.privOut("****************************************\n");
+						rTrace.privOut("**      Framework: %s               **\n", FRAMEWORK_VER);
+						rTrace.privOut("**   C++ Compiler: %d          **\n", _MSC_FULL_VER);
+						rTrace.privOut("**  Tools Version: %s        **\n", TOOLS_VERSION);
+						rTrace.privOut("**    Windows SDK: %s       **\n", WINDOWS_TARGET_PLATFORM);
+						rTrace.privOut("**   Mem Tracking: %s   **\n", MEMORY_TRACKING_ENABLE_STRING);
+						rTrace.privOut("**           Mode: %s        **\n", BUILD_CONFIG_MODE);
+						rTrace.privOut("****************************************\n");
+						rTrace.privOut("\n");
 						printf("\n");
 						printf("****************************************\n");
 						printf("**      Framework: %s               **\n", FRAMEWORK_VER);
@@ -687,10 +734,10 @@
 						printf("**           Mode: %s        **\n", BUILD_CONFIG_MODE);
 						printf("****************************************\n");
 						printf("\n");
-						pTrace->privOut("--------------------------------\n");
-						pTrace->privOut("    Memory Tracking: start()    \n");
-						pTrace->privOut("--------------------------------\n");
-						pTrace->privOut("\n");
+						rTrace.privOut("--------------------------------\n");
+						rTrace.privOut("    Memory Tracking: start()    \n");
+						rTrace.privOut("--------------------------------\n");
+						rTrace.privOut("\n");
 						printf("--------------------------------\n");
 						printf("    Memory Tracking: start()    \n");
 						printf("--------------------------------\n");
@@ -701,21 +748,21 @@
 
 			static void ProcessBegin_Release() 
 			{
-				MemTrace *pTrace = MemTrace::privGetInstance();
+				MemTrace &rTrace = MemTrace::privGetRefInstance();
 
 				// This is included so you can have one universal include
-				std::call_once(pTrace->ProcessBeginFlag, [pTrace]()
+				std::call_once(rTrace.ProcessBeginFlag, [&rTrace]() noexcept
 				{
-					pTrace->privOut("\n"); 
-					pTrace->privOut("****************************************\n"); 
-					pTrace->privOut("**      Framework: %s               **\n", FRAMEWORK_VER); 
-					pTrace->privOut("**   C++ Compiler: %d          **\n", _MSC_FULL_VER); 
-					pTrace->privOut("**  Tools Version: %s        **\n", TOOLS_VERSION);
-					pTrace->privOut("**    Windows SDK: %s       **\n", WINDOWS_TARGET_PLATFORM); 
-					pTrace->privOut("**   Mem Tracking: %s   **\n", MEMORY_TRACKING_ENABLE_STRING); 
-					pTrace->privOut("**           Mode: %s        **\n", BUILD_CONFIG_MODE);
-					pTrace->privOut("****************************************\n"); 
-					pTrace->privOut("\n"); 
+					rTrace.privOut("\n"); 
+					rTrace.privOut("****************************************\n"); 
+					rTrace.privOut("**      Framework: %s               **\n", FRAMEWORK_VER); 
+					rTrace.privOut("**   C++ Compiler: %d          **\n", _MSC_FULL_VER); 
+					rTrace.privOut("**  Tools Version: %s        **\n", TOOLS_VERSION);
+					rTrace.privOut("**    Windows SDK: %s       **\n", WINDOWS_TARGET_PLATFORM); 
+					rTrace.privOut("**   Mem Tracking: %s   **\n", MEMORY_TRACKING_ENABLE_STRING); 
+					rTrace.privOut("**           Mode: %s        **\n", BUILD_CONFIG_MODE);
+					rTrace.privOut("****************************************\n"); 
+					rTrace.privOut("\n"); 
 					printf("\n"); 
 					printf("****************************************\n"); 
 					printf("**      Framework: %s               **\n", FRAMEWORK_VER); 
@@ -730,23 +777,66 @@
 				);
 			}
 
+
+			static int GetPlacementNewCount() noexcept
+			{
+				const MemTrace &rTrace = MemTrace::privGetRefInstance();
+				return rTrace.PlacementNew_Count;
+			}
+
+			static void IncrementPlacementNewCount()
+			{
+				MemTrace &rTrace = MemTrace::privGetRefInstance();
+				rTrace.PlacementNew_mtx.lock();
+				rTrace.PlacementNew_Count++;
+				rTrace.PlacementNew_mtx.unlock();
+			}
+
+			static void DecrementPlacementNewCount()
+			{
+				MemTrace &rTrace = MemTrace::privGetRefInstance();
+				rTrace.PlacementNew_mtx.lock();
+				rTrace.PlacementNew_Count--;
+				rTrace.PlacementNew_mtx.unlock();
+			}
+
 			std::once_flag ProcessBeginFlag;
 			std::once_flag ProcessEndFlag;
 
 		private:
-			static MemTrace *privGetInstance() noexcept
+
+			static MemTrace &privGetRefInstance() noexcept
 			{
-				// This is where its actually stored (BSS section)
 				static MemTrace helper;
-				return &helper;
+				return helper;
 			}
+
 			char privBuff[MemTraceBuffSize];
 			std::mutex mtx;
+
+			int PlacementNew_Count;
+			std::mutex PlacementNew_mtx;
 		};
+
+	
+		#define AZUL_PLACEMENT_NEW_BEGIN	assert(MemTrace::GetPlacementNewCount() == 0); \
+											__pragma(push_macro("new")) \
+											MemTrace::IncrementPlacementNewCount();
+											
+		#define AZUL_PLACEMENT_NEW_END      __pragma(pop_macro("new")) \
+											MemTrace::DecrementPlacementNewCount(); \
+											assert(MemTrace::GetPlacementNewCount() == 0);
 
 		#if defined(_DEBUG) && defined(MEM_TRACKER_ENABLED)
 			#define _CRTDBG_MAP_ALLOC  
 			#define new new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+
+			#define malloc(s)          _malloc_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)
+			#define free(p)            _free_dbg(p, _NORMAL_BLOCK)
+			#define calloc(c, s)       _calloc_dbg(c, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+			#define realloc(p, s)      _realloc_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+
+
 		#else
 			#pragma warning( push )
 				#pragma warning( disable : 4820 )
@@ -813,6 +903,10 @@
 
 #ifndef UNIT_TEST_CPP_H
 #define UNIT_TEST_CPP_H
+
+		#define UNIT_TEST_MEMORYCHECK_START int UnitTestStartLeak = MemTrace::LeakCount(); {
+		#define UNIT_TEST_MEMORYCHECK_STOP	} int UnitTestFinalLeak = MemTrace::LeakCount(); CHECK(UnitTestStartLeak == UnitTestFinalLeak);
+
 
 		class UnitTrace
 		{
@@ -1374,7 +1468,7 @@
 			{
 				LARGE_INTEGER Frequency;
 				QueryPerformanceFrequency(&Frequency);
-				this->SecondsPerCycle = 1.0f / Frequency.QuadPart;
+				this->SecondsPerCycle = 1.0f / (float)Frequency.QuadPart;
 			}
 			LARGE_INTEGER privGetTimer() noexcept
 			{

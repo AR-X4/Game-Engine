@@ -12,9 +12,15 @@
     <ClInclude Include="include\File.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\md5.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\File.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\md5.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

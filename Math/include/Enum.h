@@ -25,27 +25,32 @@ namespace Azul
 		x = 0,
 		X = 0,
 		vx = 0,
+		VX = 0
 	};
 
 	enum y_enum
 	{
 		y = 0,
 		Y = 0,
-		vy = 0
+		vy = 0,
+		VY = 0
 	};
 
 	enum z_enum
 	{
 		z = 0,
 		Z = 0,
-		vz = 0
+		vz = 0,
+		VZ = 0
 	};
 
 	enum w_enum
 	{
 		w = 0,
 		W = 0,
-		real = 0
+		real = 0,
+		REAL = 0
+
 	};
 
 	enum m0_enum

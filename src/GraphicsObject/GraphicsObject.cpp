@@ -1,5 +1,3 @@
-
-
 #include "GraphicsObject.h"
 #include "MathEngine.h"
 #include "Models/Model.h"
@@ -12,6 +10,8 @@ namespace Azul
 		pShaderObj(_pShaderObj)
 	{
 		this->poWorld = new Matrix(Matrix::Special::Identity);
+		this->poCurrSphere = new Sphere();
+		assert(this->poCurrSphere);
 		assert(this->poWorld);
 		assert(_pModel);
 		assert(_pShaderObj);
@@ -21,6 +21,31 @@ namespace Azul
 	GraphicsObject::~GraphicsObject()
 	{
 		delete this->poWorld;
+		delete this->poCurrSphere;
+	}
+
+	void GraphicsObject::privUpdateBoundingSphereForCollision()
+	{
+		// Original model sphere
+		Sphere* pTmp = this->pModel->poRefSphere;
+
+		// Update... cntr process through the world
+		// Assuming a uniform scaling
+		Vect A = pTmp->cntr;
+
+		Vect radius(1.0f, 0.0f, 0.0f);
+		Vect B = A + radius;
+
+		Vect A_out = A * (*this->poWorld);
+		Vect B_out = B * (*this->poWorld);
+		poCurrSphere->rad = (B_out - A_out).mag() * pTmp->rad;
+		poCurrSphere->cntr = A_out;
+	}
+
+	Sphere* GraphicsObject::GetBoundingSphereForCollision()
+	{
+		this->privUpdateBoundingSphereForCollision();
+		return this->poCurrSphere;
 	}
 
 	void GraphicsObject::Render()

@@ -107,11 +107,20 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{645d06a3-890c-492b-a07e-4a8355f72b1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Editor">
-      <UniqueIdentifier>{f312d6ea-a603-46f9-b4c1-d48b66afe494}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GUI\GUIWindows">
       <UniqueIdentifier>{53b7defd-0209-4106-bd6f-7b7cb2cf0e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BoundingVolume">
+      <UniqueIdentifier>{1fcae831-d3a9-4dc6-abff-36926d4f39bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AssetLoader">
+      <UniqueIdentifier>{dd798635-450c-4208-b6cd-cc90839ffd77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Time">
+      <UniqueIdentifier>{8d19cf63-ece7-4f16-a6c4-fbbae7480571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{749b5378-67ac-4976-9ba0-2e15d6cd5d24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -187,37 +196,16 @@
     <None Include="..\dist\imgui\lib\imgui_X86Debug.pdb">
       <Filter>_Libs\imgui\lib</Filter>
     </None>
+    <None Include="Shaders\colorSingleRender.vs.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\colorSingleRender.fs.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Framework\Framework.h">
       <Filter>_Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Align16Math.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Constants.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Debug.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Enum.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\MathEngine.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Matrix.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Trig.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Util.h">
-      <Filter>_Libs\Math\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\Math\include\Vect.h">
-      <Filter>_Libs\Math\include</Filter>
     </ClInclude>
     <ClInclude Include="..\GLFW\include\GLFW\glfw3.h">
       <Filter>_Libs\GLFW\include</Filter>
@@ -266,9 +254,6 @@
     </ClInclude>
     <ClInclude Include="..\dist\SB7\include\GL\wglext.h">
       <Filter>_Libs\SB7\include\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dist\File\include\File.h">
-      <Filter>_Libs\File\include</Filter>
     </ClInclude>
     <ClInclude Include="..\dist\PCSTree\include\PCSNode.h">
       <Filter>_Libs\PCSTree\include</Filter>
@@ -414,9 +399,6 @@
     <ClInclude Include="..\imgui\include\imgui_impl_glfw.h">
       <Filter>_Libs\imgui\include</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Editor.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
     <ClInclude Include="GUI\GUIManager.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
@@ -428,6 +410,123 @@
     </ClInclude>
     <ClInclude Include="GUI\StatsWindow.h">
       <Filter>Source Files\GUI\GUIWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\File\include\File.h">
+      <Filter>_Libs\File\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Constants.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Debug.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Enum.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\MathApp.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\MathEngine.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Matrix.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Quat.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\QuatApp.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Trig.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Util.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\Vect.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\include\VectApp.h">
+      <Filter>_Libs\Math\include</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingVolume\BoundingSphereGameObject.h">
+      <Filter>Source Files\BoundingVolume</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingVolume\BoundingSphere.h">
+      <Filter>Source Files\BoundingVolume</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObject\GraphicsObject_WireframeConstantColor.h">
+      <Filter>Source Files\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\SimpleGameObject.h">
+      <Filter>Source Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader\AssetLoader.h">
+      <Filter>Source Files\AssetLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader\PackageHeader.h">
+      <Filter>Source Files\AssetLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader\ChunkHeader.h">
+      <Filter>Source Files\AssetLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\PrimitiveModel.h">
+      <Filter>Source Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraModel.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Time\Time.h">
+      <Filter>Source Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Time\Timer.h">
+      <Filter>Source Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObjectRigid.h">
+      <Filter>Source Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObjectAnim.h">
+      <Filter>Source Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObject\GraphicsDebugMessage.h">
+      <Filter>Source Files\GraphicsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameManager.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Anim.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimController.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Bone.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Clip.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Mixer.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Skeleton.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\TimerController.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimControllerManager.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\ClipManager.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\SkeletonManager.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\SkeletonHierarchy.h">
+      <Filter>Source Files\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -533,9 +632,6 @@
     <ClCompile Include="Input\InputObserver.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Editor.cpp">
-      <Filter>Source Files\Editor</Filter>
-    </ClCompile>
     <ClCompile Include="GUI\GUIManager.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -547,6 +643,81 @@
     </ClCompile>
     <ClCompile Include="GUI\StatsWindow.cpp">
       <Filter>Source Files\GUI\GUIWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingVolume\BoundingSphereGameObject.cpp">
+      <Filter>Source Files\BoundingVolume</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingVolume\BoundingSphere.cpp">
+      <Filter>Source Files\BoundingVolume</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObject\GraphicsObject_WireframeConstantColor.cpp">
+      <Filter>Source Files\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\SimpleGameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoader\AssetLoader.cpp">
+      <Filter>Source Files\AssetLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\PrimitiveModel.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CameraModel.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Timer_win32.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Time.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Timer.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GameObjectRigid.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GameObjectAnim.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObject\GraphicsDebugMessage.cpp">
+      <Filter>Source Files\GraphicsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Anim.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimController.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Bone.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Clip.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Mixer.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Skeleton.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\TimerController.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimControllerManager.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\ClipManager.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\SkeletonManager.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\SkeletonHierarchy.cpp">
+      <Filter>Source Files\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

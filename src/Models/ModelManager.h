@@ -12,6 +12,7 @@ namespace Azul
 		static void Add(Model* pModel);
 		static void Create();
 		static void Destroy();
+		static Model* Find(Model::Name _name);
 
 	private:  // methods
 
@@ -23,7 +24,7 @@ namespace Azul
 
 	private:  // add
 
-		Model* active;
+		Model* poHead;
 
 	};
 

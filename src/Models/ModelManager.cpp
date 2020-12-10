@@ -5,7 +5,7 @@ namespace Azul
 {
 	ModelManager::ModelManager()
 	{
-		this->active = nullptr;
+		this->poHead = nullptr;
 	}
 
 	ModelManager* ModelManager::privGetInstance()
@@ -27,15 +27,40 @@ namespace Azul
 		ModelManager* pModelManager = ModelManager::privGetInstance();
 		assert(pModelManager);
 
-		Model* pLink = pModelManager->active;
+		Model* pLink = pModelManager->poHead;
 
 		while (pLink != nullptr)
 		{
 			Model* pTmp = pLink;
 			pLink = (Model*)pLink->next;
-			pModelManager->privRemove(pTmp, pModelManager->active);
+			pModelManager->privRemove(pTmp, pModelManager->poHead);
 			delete pTmp;
 		}
+	}
+
+	Model* ModelManager::Find(Model::Name _name)
+	{
+		ModelManager* pModelManager = ModelManager::privGetInstance();
+		assert(pModelManager);
+
+		Model* pLink = pModelManager->poHead;
+
+		while (pLink != nullptr)
+		{
+			if (pLink->ModelName == _name) {
+				return pLink;
+			}
+
+			pLink = pLink->next;
+		}
+
+		assert(false);
+		return nullptr;
+
+
+
+
+
 	}
 
 	void ModelManager::Add(Model* pModel)
@@ -48,7 +73,7 @@ namespace Azul
 		assert(pModel);
 
 		// Now add it to the manager
-		pModelManager->privAddToFront(pModel, pModelManager->active);
+		pModelManager->privAddToFront(pModel, pModelManager->poHead);
 	}
 
 	void ModelManager::privAddToFront(Model* node, Model*& head)
@@ -69,7 +94,7 @@ namespace Azul
 		}
 	}
 
-	void ModelManager::privRemove(Model* pNode, Model*& poHead)
+	void ModelManager::privRemove(Model* pNode, Model*& poHead_)
 	{
 		assert(pNode);
 
@@ -79,7 +104,7 @@ namespace Azul
 		}
 		else
 		{  // first
-			poHead = (Model*)pNode->next;
+			poHead_ = (Model*)pNode->next;
 		}
 
 		if (pNode->next != nullptr)

@@ -269,7 +269,7 @@ namespace Azul
 	}
 
 	CubeModel::CubeModel(const char* const pModelFileName)
-		: Model()
+		: PrimitiveModel(Name::CUBE)
 	{
 		assert(pModelFileName);
 		this->privCreateVAO(pModelFileName);

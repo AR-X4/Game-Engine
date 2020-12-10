@@ -267,12 +267,12 @@ namespace Azul
 
 	void Camera::getFieldOfView(float& Value) const
 	{
-		Value = this->aspectRatio;
+		Value = this->fovy;
 	};
 
 	void Camera::setFieldOfView(const float Value)
 	{
-		this->aspectRatio = Value;
+		this->fovy = Value;
 	};
 
 	void Camera::getNearDist(float& Value) const
@@ -316,6 +316,34 @@ namespace Azul
 	void Camera::getFarBottomRight(Vect& vOut)const
 	{
 		vOut = this->farBottomRight;
+	}
+
+	Camera::CullResult Camera::CullTest(const Sphere& Sphere)
+	{
+		CullResult result = Camera::CullResult::CULL_INSIDE;
+
+		// first test
+		Vect A = Sphere.cntr - this->nearTopLeft;
+
+		if ((A.dot(this->topNorm) > Sphere.rad) ||
+			(A.dot(this->leftNorm) > Sphere.rad) ||
+			(A.dot(this->frontNorm) > Sphere.rad))
+		{
+			result = Camera::CullResult::CULL_OUTSIDE;
+		}
+		else
+		{
+			Vect B = Sphere.cntr - this->farBottomRight;
+
+			if ((B.dot(this->backNorm) > Sphere.rad) ||
+				(B.dot(this->rightNorm) > Sphere.rad) ||
+				(B.dot(this->bottomNorm) > Sphere.rad))
+			{
+				result = Camera::CullResult::CULL_OUTSIDE;
+			}
+		}
+
+		return result;
 	}
 
 	void Camera::SetName(Name NameIn)

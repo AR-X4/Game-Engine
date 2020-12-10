@@ -6,13 +6,18 @@
 // Includes to handle SIMD register types
 #include <xmmintrin.h>
 #include <smmintrin.h> 
-#include "Align16Math.h"
+
+#include "Constants.h"
+
+// This file assumes Framework.h is included in executable for Align16
 
 namespace Azul
 {
+	// forward declare
 	class Matrix;
+	class Quat;
 
-	class Vect final : public Align16Math
+	class Vect final : public Align16
 	{
 	public:
 
@@ -24,20 +29,25 @@ namespace Azul
 
 		//---Specialized Constructors---
 		Vect(const float& tx, const float& ty, const float& tz, const float& tw = 1.0f);
+		Vect(const Quat& quatIn);
 
 		//---Overloaded Operators---
-		Vect operator + (const Vect & t) const;
-		Vect operator - (const Vect & t) const;
-		Vect operator * (const float& s) const;
-		Vect operator * (const Vect& t) const;
-		Vect operator * (const Matrix& m) const;
+		const Vect operator + (const Vect& t) const;
+		const Vect operator - (const Vect& t) const;
+		const Vect operator * (const float& s) const;
+		const Vect operator * (const Vect& t) const;
+		const Vect operator * (const Matrix& m) const;
+		const Vect operator * (const Quat& q) const;
 		Vect& operator *= (const Matrix& m);
 		Vect& operator *= (const float& s);
+		Vect& operator *= (const Quat& q);
 		Vect& operator += (const Vect& v);
 		Vect& operator -= (const Vect& v);
 
-		Vect operator + () const;
-		Vect operator - () const;
+		Vect& operator /= (const float& s);
+
+		const Vect operator + () const;
+		const Vect operator - () const;
 
 		float& operator [] (const x_enum);
 		float& operator [] (const y_enum);
@@ -50,25 +60,23 @@ namespace Azul
 		const float operator [] (const w_enum) const;
 
 		//---Math Functions---
-		Vect cross(const Vect& t) const;
+		const Vect cross(const Vect& t) const;
 		const float dot(const Vect& t) const;
 		Vect& norm();
-		Vect getNorm() const;
+		const Vect getNorm() const;
 		const float mag() const;
 		const float magSqr() const;
 		const float getAngle(const Vect& v) const;
 
 		//---Checks---
-		const bool isEqual(const Vect& v, const float& ep) const;
-		const bool isEqual(const Vect& v) const;
-		const bool isZero(const float& ep) const;
-		const bool isZero() const;
+		const bool isEqual(const Vect& v, const float& ep = MATH_TOLERANCE) const;
+		const bool isZero(const float& ep = MATH_TOLERANCE) const;
 
 		//---Setters---
 		Vect& set(const float& x, const float& y, const float& z);
 		Vect& set(const float& x, const float& y, const float& z, const float& w);
 		Vect& set(const Vect& v);
-		
+
 		//---Accessors---
 		const float x() const;
 		const float y() const;
@@ -98,8 +106,7 @@ namespace Azul
 	};
 
 	//non-member functions
-	Vect operator * (const float& s, const Vect& t);
-	
+	const Vect operator * (const float& s, const Vect& t);
 }
 
 #endif

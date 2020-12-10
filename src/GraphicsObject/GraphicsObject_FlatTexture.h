@@ -11,7 +11,7 @@ namespace Azul
 	class GraphicsObject_FlatTexture :public GraphicsObject
 	{
 	public:
-		GraphicsObject_FlatTexture(const Model* const pModel, const ShaderObject* const pShaderObj, TextureManager::Name _name);
+		GraphicsObject_FlatTexture(const Model* const pModel, const ShaderObject* const pShaderObj, TextureManager::Name _name = TextureManager::Name::DEFAULT);
 
 		GraphicsObject_FlatTexture() = delete;
 		GraphicsObject_FlatTexture(const GraphicsObject_FlatTexture&) = delete;

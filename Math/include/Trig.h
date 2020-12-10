@@ -9,8 +9,6 @@ namespace Azul
 	{
 	public:
 
-		// Do your magic here
-
 		static float cos(const float& f);
 		static float sin(const float& f);
 		static float tan(const float& f);
@@ -21,7 +19,6 @@ namespace Azul
 		static void cossin(float& y, float& z, const float& x);
 		static float sqrt(const float& f);
 		static float rsqrt(const float& f);
-
 
 	};
 }

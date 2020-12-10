@@ -276,7 +276,7 @@ namespace Azul
 	}
 
 	DiamondModel::DiamondModel(const char* const pModelFileName)
-		: Model()
+		: PrimitiveModel(Name::DIAMOND)
 	{
 
 		this->CreateNormalData();

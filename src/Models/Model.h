@@ -3,6 +3,7 @@
 
 #include "sb7.h"
 #include "MathEngine.h"
+#include "BoundingVolume/BoundingSphere.h"
 
 namespace Azul
 {
@@ -11,6 +12,22 @@ namespace Azul
 	class Model
 	{
 	public:
+		enum class Name
+		{
+			UNINITIALIZED,
+			NULLMODEL,
+			PYRAMID,
+			SPHERE,
+			CUBE,
+			DIAMOND,
+			SPACESHIP,
+			BEAR,
+			ASTROBOY,
+			GUN,
+			BUGGY,
+			CAMERA
+		
+		};
 
 		struct Vert_xyzuvn
 		{
@@ -31,13 +48,16 @@ namespace Azul
 			unsigned int v2;
 		}; 
 
+	protected:
+		Model(Name nameIn);
 
-		Model();
+	public:
+		Model(const Vert_xyzuvn* vertBuffer, const Tri_index* triBuffer, unsigned int _numVerts, unsigned int _numTris, Name nameIn = Name::UNINITIALIZED);// , Vect& CenterPoint, float radius);
 		Model(Model& copyModel) = delete;
 		Model& operator = (Model& copyModel) = delete;
 		virtual ~Model();
-
-
+		Model() = delete;
+		
 		// Data
 		int numVerts;
 		int numTris;    
@@ -46,18 +66,17 @@ namespace Azul
 		GLuint vbo_0;   // xyzuvn
 		GLuint vbo_1;   // trilist
 
-	protected:
+		// Reference sphere... before any transformations are applied
+		Sphere* poRefSphere;
 
+	private:
+		void privCreateVAO(const Vert_xyzuvn* vertBuffer, const Tri_index* triBuffer);
 
-		// load VAO
-		virtual void privCreateVAO(const char* const pModelFileName) = 0;
-
-		Vect CalcNormalVect(const Vect& x, const Vect& y, const Vect& z);
-		
-	
+	//to do access protection 
 	public:
 		Model* next;
 		Model* prev;
+		Name ModelName;
 
 	};
 

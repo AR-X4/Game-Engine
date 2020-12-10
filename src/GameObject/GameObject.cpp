@@ -1,11 +1,7 @@
 
-#include <math.h>
-#include "MathEngine.h"
+
 #include "GameObject.h"
 #include "Game/Game.h"
-
-// ToDo:  refactor
-extern Game* pGame;
 
 namespace Azul
 {
@@ -13,26 +9,41 @@ namespace Azul
 	GameObject::GameObject(GraphicsObject* pGraphicsObject)
 		: poGraphicsObject(pGraphicsObject)
 	{
-		this->poWorld = new Matrix(Matrix::Special::Identity);//default matrix
-		this->poTrans = new Vect(0.0f, 0.0f, 0.0f);			  //default location
-		this->poScale = new Vect(1.0f, 1.0f, 1.0f);			  //default scale
+		this->poWorld = new Matrix(Matrix::Special::Identity);
 		assert(poWorld);
-		assert(poTrans);
-		assert(poScale);
-		assert(pGraphicsObject);
 
-		this->rotY = 0.0f;
-		this->rotZ = 0.0f;
-		this->deltaRot = 0.0f;
+		assert(pGraphicsObject != 0);
+
+		this->mDrawEnable = true;
 	}
 
 	GameObject::~GameObject()
 	{
 		delete this->poWorld;
-		delete this->poTrans;
-		delete this->poScale;
 		delete this->poGraphicsObject;
 	}
+
+	//void GameObject::baseUpdateBoundingSphere()
+	//{
+	//	// Get the ref Sphere
+	//	Sphere* pRefSphere = poGraphicsObject->GetModel()->poRefSphere;
+	//	assert(pRefSphere);
+
+	//	// Get the curr Sphere
+	//	Sphere* pCurrSphere = poGraphicsObject->poCurrSphere;
+	//	assert(pCurrSphere);
+
+	//	// Update... cntr process through the world
+	//	// Assuming a uniform scaling
+	//	Vect A = pRefSphere->cntr;
+	//	Vect radius(1.0f, 0.0f, 0.0f);
+	//	Vect B = A + radius;
+	//	Vect A_out = A * (*this->poWorld);
+	//	Vect B_out = B * (*this->poWorld);
+
+	//	pCurrSphere->rad = (B_out[x] - A_out[x]) * pRefSphere->rad;
+	//	pCurrSphere->cntr = A_out;
+	//}
 
 	Matrix* GameObject::GetWorld()
 	{
@@ -44,60 +55,31 @@ namespace Azul
 		return this->poGraphicsObject;
 	}
 
-	void GameObject::privUpdate(float currentTime)
+	void GameObject::SetWorld(Matrix* _pWorld)
 	{
-		AZUL_UNUSED_VAR(currentTime);
-
-		// Goal: update the world matrix
-		this->rotY += deltaRot;
-		this->rotZ += 0.01f;
-
-		Matrix Scale(Matrix::Scale::XYZ, *this->poScale);
-		Matrix TransA(Matrix::Trans::XYZ, *this->poTrans);
-		Matrix RotY(Matrix::Rot1::Y, this->rotY);
-		Matrix RotZ(Matrix::Rot1::Z, this->rotZ);
-
-		// world matrix
-		*this->poWorld = Scale * RotY * RotZ * TransA;
+		assert(_pWorld);
+		*this->poWorld = *_pWorld;
 	}
 
-	void GameObject::Update(float currentTime)
+	bool GameObject::GetDrawEnable()
 	{
-		// Goal: update the world matrix
-		this->privUpdate(currentTime);
-
-		// push to graphics object
-		this->poGraphicsObject->SetWorld(*this->poWorld);
+		return this->mDrawEnable;
 	}
 
-	void GameObject::SetWorld(Matrix* pWorld)
+	void GameObject::SetDrawEnable(bool val)
 	{
-		assert(pWorld);
-		*this->poWorld = *pWorld;
-	}
-
-	void GameObject::SetPos(const Vect& pos)
-	{
-		*this->poTrans = pos;
-	}
-
-	void GameObject::SetScale(const Vect& inScale)
-	{
-		// deep copy
-		*this->poScale = inScale;
-	}
-
-	void GameObject::SetDeltaRot(float delta)
-	{
-		this->deltaRot = delta;
+		this->mDrawEnable = val;
 	}
 
 	void GameObject::Draw()
 	{
-		GraphicsObject* pGraphicsObj = this->GetGraphicsObject();
-		assert(pGraphicsObj);
+		if (mDrawEnable == true) {
 
-		pGraphicsObj->Render();
+			GraphicsObject* pGraphicsObj = this->GetGraphicsObject();
+			assert(pGraphicsObj);
+
+			pGraphicsObj->Render();
+		}
 	}
 
 }

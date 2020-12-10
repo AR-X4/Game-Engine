@@ -3,6 +3,11 @@
 
 
 
+void LoadAnimDemo();
+void UpdateAnimDemo();
+void UpdateModelDemo();
+void LoadModelsDemo();
+void BoundingVolDemo();
 void LoadPyramid();
 void LoadCube();
 void LoadSphere();

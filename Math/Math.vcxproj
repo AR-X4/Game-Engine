@@ -11,22 +11,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Align16Math.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Debug.h" />
     <ClInclude Include="include\Enum.h" />
+    <ClInclude Include="include\MathApp.h" />
     <ClInclude Include="include\MathEngine.h" />
     <ClInclude Include="include\Matrix.h" />
+    <ClInclude Include="include\Quat.h" />
+    <ClInclude Include="include\QuatApp.h" />
     <ClInclude Include="include\Trig.h" />
     <ClInclude Include="include\Util.h" />
     <ClInclude Include="include\Vect.h" />
+    <ClInclude Include="include\VectApp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Debug.cpp" />
     <ClCompile Include="src\Matrix.cpp" />
+    <ClCompile Include="src\Quat.cpp" />
+    <ClCompile Include="src\QuatApp.cpp" />
     <ClCompile Include="src\Trig.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Vect.cpp" />
+    <ClCompile Include="src\VectApp.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -75,7 +81,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_GLFW_WIN32;_GLFW_USE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_GLFW_WIN32;_GLFW_USE_CONFIG_H;WINDOWS_TARGET_PLATFORM="$(TargetPlatformVersion)";MEMORY_LOGS_DIR=R"($(SolutionDir))";TOOLS_VERSION=R"($(VCToolsVersion))";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>
       </SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -88,8 +94,9 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <UseUnicodeForAssemblerListing>false</UseUnicodeForAssemblerListing>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(ProjectDir)src;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>Framework.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,7 +120,7 @@ copy "$(ProjectDir)include\*.h" "$(SolutionDir)dist\Math\include\."</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_GLFW_WIN32;_GLFW_USE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_GLFW_WIN32;_GLFW_USE_CONFIG_H;WINDOWS_TARGET_PLATFORM="$(TargetPlatformVersion)";MEMORY_LOGS_DIR=R"($(SolutionDir))";TOOLS_VERSION=R"($(VCToolsVersion))";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>
       </SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>

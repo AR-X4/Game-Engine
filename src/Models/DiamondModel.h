@@ -1,14 +1,14 @@
 #ifndef DIAMOND_MODEL_H
 #define DIAMOND_MODEL_H
 
-#include "Model.h"
+#include "PrimitiveModel.h"
 
 namespace Azul
 {
 
 
 
-	class DiamondModel : public Model
+	class DiamondModel : public PrimitiveModel
 	{
 	public:
 

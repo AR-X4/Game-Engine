@@ -1,11 +1,7 @@
 
-#include "Game/Game.h"
+#include "Game/GameManager.h"
 #include "Mouse.h"
 
-#include "Editor/Editor.h"
-
-//extern Game* pGame;
-extern Editor* pEditor;
 
 namespace Azul
 {
@@ -20,7 +16,7 @@ namespace Azul
 	{
 		bool value;
 
-		if (pEditor->GetMouseButton(button) == GLFW_PRESS)
+		if (GameManager::GetGame()->GetMouseButton(button) == GLFW_PRESS)
 		{
 			value = true;
 		}
@@ -34,7 +30,7 @@ namespace Azul
 	void Mouse::GetCursor(float& xPos, float& yPos)
 	{
 		// get mouse position
-		pEditor->GetCursorPos(xPos, yPos);
+		GameManager::GetGame()->GetCursorPos(xPos, yPos);
 
 	}
 

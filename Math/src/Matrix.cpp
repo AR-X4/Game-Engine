@@ -4,12 +4,11 @@
 
 namespace Azul
 {
-	// Do your magic here
 	//---Big Four---
-	Matrix::Matrix() 
-		: _m0(0.0f), _m1(0.0f), _m2(0.0f), _m3(0.0f), _m4(0.0f), 
-		  _m5(0.0f), _m6(0.0f), _m7(0.0f), _m8(0.0f), _m9(0.0f), 
-		  _m10(0.0f), _m11(0.0f), _m12(0.0f), _m13(0.0f), _m14(0.0f), _m15(0.0f)
+	Matrix::Matrix()
+		: _m0(0.0f), _m1(0.0f), _m2(0.0f), _m3(0.0f), _m4(0.0f),
+		_m5(0.0f), _m6(0.0f), _m7(0.0f), _m8(0.0f), _m9(0.0f),
+		_m10(0.0f), _m11(0.0f), _m12(0.0f), _m13(0.0f), _m14(0.0f), _m15(0.0f)
 	{}
 
 	Matrix::Matrix(const Matrix& tmp) {
@@ -21,7 +20,7 @@ namespace Azul
 	}
 
 	Matrix& Matrix::operator = (const Matrix& tmp) {
-		
+
 		this->_v0 = tmp._v0;
 		this->_v1 = tmp._v1;
 		this->_v2 = tmp._v2;
@@ -36,7 +35,7 @@ namespace Azul
 	{};
 
 	Matrix::Matrix(const Orient InEnum, const Vect& zAxisIn, const Vect& yAxisIn) {
-		
+
 		this->SetOrientation(InEnum, zAxisIn, yAxisIn);
 	}
 
@@ -51,7 +50,7 @@ namespace Azul
 	}
 
 	Matrix::Matrix(const Rot3, const float& RotX, const float& RotY, const float& RotZ) {
-	
+
 		this->SetRotation(RotX, RotY, RotZ);
 	}
 
@@ -92,12 +91,12 @@ namespace Azul
 	}
 
 	Matrix::Matrix(const Trans, const Vect& TransV) {
-	
+
 		this->SetTrans(TransV);
 	}
 
 	Matrix::Matrix(const Scale, const float& ScaleX, const float& ScaleY, const float& ScaleZ) {
-	
+
 
 		//set xAxis
 		this->_m0 = ScaleX;
@@ -122,7 +121,7 @@ namespace Azul
 		this->_m13 = 0.0f;
 		this->_m14 = 0.0f;
 		this->_m15 = 1.0f;
-	
+
 	}
 
 	Matrix::Matrix(const Scale, const Vect& ScaleV) {
@@ -130,8 +129,13 @@ namespace Azul
 	}
 
 	Matrix::Matrix(const Special InEnum) {
-		
+
 		this->SetSpecial(InEnum);
+	}
+
+	Matrix::Matrix(const Quat& rotMatrix)
+	{
+		this->set(rotMatrix);
 	}
 
 	//---Math Functions---
@@ -197,7 +201,7 @@ namespace Azul
 		//this->_m1* ((this->_m4 * tmp0) - (this->_m6 * tmp3) + (this->_m7 * tmp4))
 		float tmp8 = tmp0;
 		tmp8 *= this->_m4;
-		
+
 		tmp7 = tmp3;
 		tmp7 *= this->_m6;
 		tmp8 -= tmp7;
@@ -210,7 +214,7 @@ namespace Azul
 		//this->_m2* ((this->_m4 * tmp1) - (this->_m5 * tmp3) + (this->_m7 * tmp5))
 		float tmp9 = tmp1;
 		tmp9 *= this->_m4;
-		
+
 		tmp7 = tmp3;
 		tmp7 *= this->_m5;
 		tmp9 -= tmp7;
@@ -223,7 +227,7 @@ namespace Azul
 		//this->_m3* ((this->_m4 * tmp2) - (this->_m5 * tmp4) + (this->_m6 * tmp5))
 		float temp5 = tmp2;
 		temp5 *= this->_m4;
-		
+
 		tmp7 = tmp4;
 		tmp7 *= this->_m5;
 		temp5 -= tmp7;
@@ -249,7 +253,7 @@ namespace Azul
 		float tmp3 = (this->_m8  * this->_m15) - (this->_m12 * this->_m11);
 		float tmp4 = (this->_m8  * this->_m14) - (this->_m12 * this->_m10);
 		float tmp5 = (this->_m8  * this->_m13) - (this->_m12 * this->_m9);
-		
+
 		return	  this->_m0 * ((this->_m5 * tmp0) - (this->_m6 * tmp1) + (this->_m7 * tmp2))
 				- this->_m1 * ((this->_m4 * tmp0) - (this->_m6 * tmp3) + (this->_m7 * tmp4))
 				+ this->_m2 * ((this->_m4 * tmp1) - (this->_m5 * tmp3) + (this->_m7 * tmp5))
@@ -267,7 +271,7 @@ namespace Azul
 		float tmp = this->_m1;
 		this->_m1 = this->_m4;;
 		this->_m4 = tmp;
-		
+
 		//swap z value of x-axis and x value of z-axis
 		tmp = this->_m2;
 		this->_m2 = this->_m8;
@@ -321,8 +325,8 @@ namespace Azul
 		mOut._m7 = this->_m13;
 
 		//set zAxis
-		mOut._m8  = this->_m2;
-		mOut._m9  = this->_m6;
+		mOut._m8 = this->_m2;
+		mOut._m9 = this->_m6;
 		mOut._m10 = this->_m10;
 		mOut._m11 = this->_m14;
 
@@ -331,12 +335,12 @@ namespace Azul
 		mOut._m13 = this->_m7;
 		mOut._m14 = this->_m11;
 		mOut._m15 = this->_m15;
-		
+
 		return mOut;
 	}
 
 	Matrix& Matrix::inv() {
-		
+
 		float tmp = 1.0f;
 		tmp /= this->det();
 
@@ -350,19 +354,19 @@ namespace Azul
 	}
 
 	Matrix Matrix::getInv() const {
-		
+
 		float tmp = 1.0f;
 		tmp /= this->det();
 
 		//Get Adjugate
 		Matrix M = this->getAdjugate();
 		M *= tmp;
-		
+
 		return M;
 	}
 
 	Matrix Matrix::getAdjugate() const {
-	
+
 		Matrix M;
 
 		//set xAxis
@@ -416,81 +420,62 @@ namespace Azul
 
 		M._m15 = (this->_m0 * this->_m5 * this->_m10) + (this->_m1 * this->_m6 * this->_m8) + (this->_m2 * this->_m4 * this->_m9)
 			- (this->_m2 * this->_m5 * this->_m8) - (this->_m1 * this->_m4 * this->_m10) - (this->_m0 * this->_m6 * this->_m9);
-	
-		
+
+
 		return M;
 	}
 
 	//---Checks---
 	const bool Matrix::isIdentity(const float& ep) const {
-	
-		return  Util::isEqual(this->_m0,  1.0f, ep) &&
-				Util::isEqual(this->_m1,  0.0f, ep) &&
-				Util::isEqual(this->_m2,  0.0f, ep) &&
-				Util::isEqual(this->_m3,  0.0f, ep) &&
-				Util::isEqual(this->_m4,  0.0f, ep) &&
-				Util::isEqual(this->_m5,  1.0f, ep) &&
-				Util::isEqual(this->_m6,  0.0f, ep) &&
-				Util::isEqual(this->_m7,  0.0f, ep) &&
-				Util::isEqual(this->_m8,  0.0f, ep) &&
-				Util::isEqual(this->_m9,  0.0f, ep) &&
-				Util::isEqual(this->_m10, 1.0f, ep) &&
-				Util::isEqual(this->_m11, 0.0f, ep) &&
-				Util::isEqual(this->_m12, 0.0f, ep) &&
-				Util::isEqual(this->_m13, 0.0f, ep) &&
-				Util::isEqual(this->_m14, 0.0f, ep) &&
-				Util::isEqual(this->_m15, 1.0f, ep);
+
+		return  Util::isOne(this->_m0, ep) &&
+			Util::isZero(this->_m1, ep) &&
+			Util::isZero(this->_m2, ep) &&
+			Util::isZero(this->_m3, ep) &&
+			Util::isZero(this->_m4, ep) &&
+			Util::isOne(this->_m5, ep) &&
+			Util::isZero(this->_m6, ep) &&
+			Util::isZero(this->_m7, ep) &&
+			Util::isZero(this->_m8, ep) &&
+			Util::isZero(this->_m9, ep) &&
+			Util::isOne(this->_m10, ep) &&
+			Util::isZero(this->_m11, ep) &&
+			Util::isZero(this->_m12, ep) &&
+			Util::isZero(this->_m13, ep) &&
+			Util::isZero(this->_m14, ep) &&
+			Util::isOne(this->_m15, ep);
 	}
 
-	const bool Matrix::isIdentity() const {
 
-		return  Util::isEqual(this->_m0,  1.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m1,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m2,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m3,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m4,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m5,  1.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m6,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m7,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m8,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m9,  0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m10, 1.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m11, 0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m12, 0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m13, 0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m14, 0.0f, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m15, 1.0f, MATH_TOLERANCE);
-	}
+	const bool Matrix::isEqual(const Matrix& t, const float& ep) const {
 
-	const bool Matrix::isEqual(const Matrix& t) const {
-
-		return  Util::isEqual(this->_m0,  t._m0,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m1,  t._m1,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m2,  t._m2,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m3,  t._m3,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m4,  t._m4,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m5,  t._m5,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m6,  t._m6,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m7,  t._m7,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m8,  t._m8,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m9,  t._m9,  MATH_TOLERANCE) &&
-				Util::isEqual(this->_m10, t._m10, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m11, t._m11, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m12, t._m12, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m13, t._m13, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m14, t._m14, MATH_TOLERANCE) &&
-				Util::isEqual(this->_m15, t._m15, MATH_TOLERANCE);
+		return  Util::isEqual(this->_m0, t._m0, ep) &&
+			Util::isEqual(this->_m1, t._m1, ep) &&
+			Util::isEqual(this->_m2, t._m2, ep) &&
+			Util::isEqual(this->_m3, t._m3, ep) &&
+			Util::isEqual(this->_m4, t._m4, ep) &&
+			Util::isEqual(this->_m5, t._m5, ep) &&
+			Util::isEqual(this->_m6, t._m6, ep) &&
+			Util::isEqual(this->_m7, t._m7, ep) &&
+			Util::isEqual(this->_m8, t._m8, ep) &&
+			Util::isEqual(this->_m9, t._m9, ep) &&
+			Util::isEqual(this->_m10, t._m10, ep) &&
+			Util::isEqual(this->_m11, t._m11, ep) &&
+			Util::isEqual(this->_m12, t._m12, ep) &&
+			Util::isEqual(this->_m13, t._m13, ep) &&
+			Util::isEqual(this->_m14, t._m14, ep) &&
+			Util::isEqual(this->_m15, t._m15, ep);
 	}
 
 	//---Setters---
 	Matrix& Matrix::set(const Special InEnum) {
-	
+
 		this->SetSpecial(InEnum);
 		return *this;
 	}
 
 	Matrix& Matrix::set(const Trans, const float& TransX, const float& TransY, const float& TransZ) {
-		
+
 		//set xAxis
 		this->_m0 = 1.0f;
 		this->_m1 = 0.0f;
@@ -514,7 +499,7 @@ namespace Azul
 		this->_m13 = TransY;
 		this->_m14 = TransZ;
 		this->_m15 = 1.0f;
-	
+
 		return *this;
 	}
 
@@ -566,7 +551,7 @@ namespace Azul
 	}
 
 	Matrix& Matrix::set(const Row InEnum, const Vect& RowV) {
-		
+
 		switch (InEnum) {
 		case Row::i0:
 			this->_v0 = RowV;
@@ -591,14 +576,14 @@ namespace Azul
 		return *this;
 	}
 
-	Matrix& Matrix::set(const Rot, Vect& RotAxis, const float& RotAngle) {
-	
+	Matrix& Matrix::set(const Rot, const Vect& RotAxis, const float& RotAngle) {
+
 		this->SetRotAxisAngle(RotAxis, RotAngle);
 		return *this;
 	}
 
 	Matrix& Matrix::set(const Orient InEnum, const Vect& zAxisIn, const Vect& yAxisIn) {
-	
+
 		this->SetOrientation(InEnum, zAxisIn, yAxisIn);
 		return *this;
 	}
@@ -608,6 +593,39 @@ namespace Azul
 		this->_v1 = Row1;
 		this->_v2 = Row2;
 		this->_v3 = Row3;
+		return *this;
+	}
+
+	Matrix& Matrix::set(const Quat& rot)
+	{
+		const float xx = rot.qx() * rot.qx();
+		const float yy = rot.qy() * rot.qy();
+		const float zz = rot.qz() * rot.qz();
+		const float xy = rot.qx() * rot.qy();
+		const float yz = rot.qy() * rot.qz();
+		const float xz = rot.qx() * rot.qz();
+		const float wx = rot.real() * rot.qx();
+		const float wy = rot.real() * rot.qy();
+		const float wz = rot.real() * rot.qz();
+
+		//set values
+		this->_m0 = 1.0f - 2.0f * (yy + zz);
+		this->_m1 = 2.0f * (xy + wz);
+		this->_m2 = 2.0f * (xz - wy);
+		this->_m3 = 0.0f;
+
+		this->_m4 = 2.0f * (xy - wz);
+		this->_m5 = 1.0f - 2.0f * (xx + zz);
+		this->_m6 = 2.0f * (yz + wx);
+		this->_m7 = 0.0f;
+
+		this->_m8 = 2.0f * (xz + wy);
+		this->_m9 = 2.0f * (yz - wx);
+		this->_m10 = 1.0f - 2.0f * (xx + yy);
+		this->_m11 = 0.0f;
+
+		this->_v3.set(0.0f, 0.0f, 0.0f, 1.0f);
+
 		return *this;
 	}
 
@@ -636,7 +654,7 @@ namespace Azul
 
 	//---Overloaded Operators---
 
-	Matrix Matrix::operator * (const Matrix& t) const
+	const Matrix Matrix::operator * (const Matrix& t) const
 	{
 		Matrix A;
 
@@ -644,17 +662,17 @@ namespace Azul
 		A._m1 = this->_m0 * t._m1 + this->_m1 * t._m5 + this->_m2 * t._m9 + this->_m3 * t._m13;
 		A._m2 = this->_m0 * t._m2 + this->_m1 * t._m6 + this->_m2 * t._m10 + this->_m3 * t._m14;
 		A._m3 = this->_m0 * t._m3 + this->_m1 * t._m7 + this->_m2 * t._m11 + this->_m3 * t._m15;
-		  					  					  					  
+
 		A._m4 = this->_m4 * t._m0 + this->_m5 * t._m4 + this->_m6 * t._m8 + this->_m7 * t._m12;
 		A._m5 = this->_m4 * t._m1 + this->_m5 * t._m5 + this->_m6 * t._m9 + this->_m7 * t._m13;
 		A._m6 = this->_m4 * t._m2 + this->_m5 * t._m6 + this->_m6 * t._m10 + this->_m7 * t._m14;
 		A._m7 = this->_m4 * t._m3 + this->_m5 * t._m7 + this->_m6 * t._m11 + this->_m7 * t._m15;
-		  		
+
 		A._m8 = this->_m8 * t._m0 + this->_m9 * t._m4 + this->_m10 * t._m8 + this->_m11 * t._m12;
 		A._m9 = this->_m8 * t._m1 + this->_m9 * t._m5 + this->_m10 * t._m9 + this->_m11 * t._m13;
 		A._m10 = this->_m8 * t._m2 + this->_m9 * t._m6 + this->_m10 * t._m10 + this->_m11 * t._m14;
 		A._m11 = this->_m8 * t._m3 + this->_m9 * t._m7 + this->_m10 * t._m11 + this->_m11 * t._m15;
-		  
+
 		A._m12 = this->_m12 * t._m0 + this->_m13 * t._m4 + this->_m14 * t._m8 + this->_m15 * t._m12;
 		A._m13 = this->_m12 * t._m1 + this->_m13 * t._m5 + this->_m14 * t._m9 + this->_m15 * t._m13;
 		A._m14 = this->_m12 * t._m2 + this->_m13 * t._m6 + this->_m14 * t._m10 + this->_m15 * t._m14;
@@ -663,7 +681,7 @@ namespace Azul
 		return A;
 	}
 
-	Matrix Matrix::operator * (const float& s) const {
+	const Matrix Matrix::operator * (const float& s) const {
 
 		Matrix A = *this;
 
@@ -695,7 +713,7 @@ namespace Azul
 
 	}
 
-	Matrix Matrix::operator + (const Matrix& t) const
+	const Matrix Matrix::operator + (const Matrix& t) const
 	{
 		Matrix A;
 
@@ -703,12 +721,12 @@ namespace Azul
 		A._m1 = this->_m1 + t._m1;
 		A._m2 = this->_m2 + t._m2;
 		A._m3 = this->_m3 + t._m3;
-						  
+
 		A._m4 = this->_m4 + t._m4;
 		A._m5 = this->_m5 + t._m5;
 		A._m6 = this->_m6 + t._m6;
 		A._m7 = this->_m7 + t._m7;
-						  
+
 		A._m8 = this->_m8 + t._m8;
 		A._m9 = this->_m9 + t._m9;
 		A._m10 = this->_m10 + t._m10;
@@ -722,7 +740,7 @@ namespace Azul
 		return A;
 	}
 
-	Matrix Matrix::operator - (const Matrix& t) const
+	const Matrix Matrix::operator - (const Matrix& t) const
 	{
 		Matrix A;
 
@@ -730,17 +748,17 @@ namespace Azul
 		A._m1 = this->_m1 - t._m1;
 		A._m2 = this->_m2 - t._m2;
 		A._m3 = this->_m3 - t._m3;
-						  
+
 		A._m4 = this->_m4 - t._m4;
 		A._m5 = this->_m5 - t._m5;
 		A._m6 = this->_m6 - t._m6;
 		A._m7 = this->_m7 - t._m7;
-						  
+
 		A._m8 = this->_m8 - t._m8;
 		A._m9 = this->_m9 - t._m9;
 		A._m10 = this->_m10 - t._m10;
 		A._m11 = this->_m11 - t._m11;
-							
+
 		A._m12 = this->_m12 - t._m12;
 		A._m13 = this->_m13 - t._m13;
 		A._m14 = this->_m14 - t._m14;
@@ -751,19 +769,19 @@ namespace Azul
 
 	Matrix& Matrix::operator += (const Matrix& t)
 	{
-		
-		this->_m0  += t._m0;
-		this->_m1  += t._m1;
-		this->_m2  += t._m2;
-		this->_m3  += t._m3;
 
-		this->_m4  += t._m4;
-		this->_m5  += t._m5;
-		this->_m6  += t._m6;
-		this->_m7  += t._m7;
+		this->_m0 += t._m0;
+		this->_m1 += t._m1;
+		this->_m2 += t._m2;
+		this->_m3 += t._m3;
 
-		this->_m8  += t._m8;
-		this->_m9  += t._m9;
+		this->_m4 += t._m4;
+		this->_m5 += t._m5;
+		this->_m6 += t._m6;
+		this->_m7 += t._m7;
+
+		this->_m8 += t._m8;
+		this->_m9 += t._m9;
 		this->_m10 += t._m10;
 		this->_m11 += t._m11;
 
@@ -778,21 +796,21 @@ namespace Azul
 	Matrix& Matrix::operator -= (const Matrix& t)
 	{
 
-		this->_m0  -= t._m0;
-		this->_m1  -= t._m1;
-		this->_m2  -= t._m2;
-		this->_m3  -= t._m3;
-				   
-		this->_m4  -= t._m4;
-		this->_m5  -= t._m5;
-		this->_m6  -= t._m6;
-		this->_m7  -= t._m7;
-				   
-		this->_m8  -= t._m8;
-		this->_m9  -= t._m9;
+		this->_m0 -= t._m0;
+		this->_m1 -= t._m1;
+		this->_m2 -= t._m2;
+		this->_m3 -= t._m3;
+
+		this->_m4 -= t._m4;
+		this->_m5 -= t._m5;
+		this->_m6 -= t._m6;
+		this->_m7 -= t._m7;
+
+		this->_m8 -= t._m8;
+		this->_m9 -= t._m9;
 		this->_m10 -= t._m10;
 		this->_m11 -= t._m11;
-				   
+
 		this->_m12 -= t._m12;
 		this->_m13 -= t._m13;
 		this->_m14 -= t._m14;
@@ -830,7 +848,7 @@ namespace Azul
 	}
 
 	Matrix& Matrix::operator *= (const float& s) {
-	
+
 		//set xAxis
 		this->_m0 *= s;
 		this->_m1 *= s;
@@ -844,8 +862,8 @@ namespace Azul
 		this->_m7 *= s;
 
 		//set zAxis
-		this->_m8  *= s;
-		this->_m9  *= s;
+		this->_m8 *= s;
+		this->_m9 *= s;
 		this->_m10 *= s;
 		this->_m11 *= s;
 
@@ -854,17 +872,17 @@ namespace Azul
 		this->_m13 *= s;
 		this->_m14 *= s;
 		this->_m15 *= s;
-	
+
 		return *this;
 	}
 
-	Matrix Matrix::operator + () const {
+	const Matrix Matrix::operator + () const {
 
 		Matrix A = *this;
 		return A;
 	}
 
-	Matrix Matrix::operator - () const {
+	const Matrix Matrix::operator - () const {
 
 		Matrix A = *this;
 		A *= -1.0f;
@@ -888,8 +906,8 @@ namespace Azul
 		M.m7() *= s;
 
 		//set zAxis
-		M.m8()  *= s;
-		M.m9()  *= s;
+		M.m8() *= s;
+		M.m9() *= s;
 		M.m10() *= s;
 		M.m11() *= s;
 
@@ -902,87 +920,87 @@ namespace Azul
 		return M;
 	}
 
-	float& Matrix::operator [] (const m0_enum  ) { return this->_m0;  }
-	float& Matrix::operator [] (const m1_enum  ) { return this->_m1;  }
-	float& Matrix::operator [] (const m2_enum  ) { return this->_m2;  }
-	float& Matrix::operator [] (const m3_enum  ) { return this->_m3;  }
-	float& Matrix::operator [] (const m4_enum  ) { return this->_m4;  }
-	float& Matrix::operator [] (const m5_enum  ) { return this->_m5;  }
-	float& Matrix::operator [] (const m6_enum  ) { return this->_m6;  }
-	float& Matrix::operator [] (const m7_enum  ) { return this->_m7;  }
-	float& Matrix::operator [] (const m8_enum  ) { return this->_m8;  }
-	float& Matrix::operator [] (const m9_enum  ) { return this->_m9;  }
-	float& Matrix::operator [] (const m10_enum ) { return this->_m10; }
-	float& Matrix::operator [] (const m11_enum ) { return this->_m11; }
-	float& Matrix::operator [] (const m12_enum ) { return this->_m12; }
-	float& Matrix::operator [] (const m13_enum ) { return this->_m13; }
-	float& Matrix::operator [] (const m14_enum ) { return this->_m14; }
-	float& Matrix::operator [] (const m15_enum ) { return this->_m15; }
+	float& Matrix::operator [] (const m0_enum) { return this->_m0; }
+	float& Matrix::operator [] (const m1_enum) { return this->_m1; }
+	float& Matrix::operator [] (const m2_enum) { return this->_m2; }
+	float& Matrix::operator [] (const m3_enum) { return this->_m3; }
+	float& Matrix::operator [] (const m4_enum) { return this->_m4; }
+	float& Matrix::operator [] (const m5_enum) { return this->_m5; }
+	float& Matrix::operator [] (const m6_enum) { return this->_m6; }
+	float& Matrix::operator [] (const m7_enum) { return this->_m7; }
+	float& Matrix::operator [] (const m8_enum) { return this->_m8; }
+	float& Matrix::operator [] (const m9_enum) { return this->_m9; }
+	float& Matrix::operator [] (const m10_enum) { return this->_m10; }
+	float& Matrix::operator [] (const m11_enum) { return this->_m11; }
+	float& Matrix::operator [] (const m12_enum) { return this->_m12; }
+	float& Matrix::operator [] (const m13_enum) { return this->_m13; }
+	float& Matrix::operator [] (const m14_enum) { return this->_m14; }
+	float& Matrix::operator [] (const m15_enum) { return this->_m15; }
 
-	const float Matrix::operator [] (const m0_enum ) const { return this->_m0;  }
-	const float Matrix::operator [] (const m1_enum ) const { return this->_m1;  }
-	const float Matrix::operator [] (const m2_enum ) const { return this->_m2;  }
-	const float Matrix::operator [] (const m3_enum ) const { return this->_m3;  }
-	const float Matrix::operator [] (const m4_enum ) const { return this->_m4;  }
-	const float Matrix::operator [] (const m5_enum ) const { return this->_m5;  }
-	const float Matrix::operator [] (const m6_enum ) const { return this->_m6;  }
-	const float Matrix::operator [] (const m7_enum ) const { return this->_m7;  }
-	const float Matrix::operator [] (const m8_enum ) const { return this->_m8;  }
-	const float Matrix::operator [] (const m9_enum ) const { return this->_m9;  }
+	const float Matrix::operator [] (const m0_enum) const { return this->_m0; }
+	const float Matrix::operator [] (const m1_enum) const { return this->_m1; }
+	const float Matrix::operator [] (const m2_enum) const { return this->_m2; }
+	const float Matrix::operator [] (const m3_enum) const { return this->_m3; }
+	const float Matrix::operator [] (const m4_enum) const { return this->_m4; }
+	const float Matrix::operator [] (const m5_enum) const { return this->_m5; }
+	const float Matrix::operator [] (const m6_enum) const { return this->_m6; }
+	const float Matrix::operator [] (const m7_enum) const { return this->_m7; }
+	const float Matrix::operator [] (const m8_enum) const { return this->_m8; }
+	const float Matrix::operator [] (const m9_enum) const { return this->_m9; }
 	const float Matrix::operator [] (const m10_enum) const { return this->_m10; }
 	const float Matrix::operator [] (const m11_enum) const { return this->_m11; }
 	const float Matrix::operator [] (const m12_enum) const { return this->_m12; }
 	const float Matrix::operator [] (const m13_enum) const { return this->_m13; }
 	const float Matrix::operator [] (const m14_enum) const { return this->_m14; }
 	const float Matrix::operator [] (const m15_enum) const { return this->_m15; }
-	
+
 	//-----------------------------------
 	//-------------data accessors--------
 	//-----------------------------------
 
-	float& Matrix::m0()  { return this->_m0; }
-	float& Matrix::m1()  { return this->_m1; }
-	float& Matrix::m2()  { return this->_m2; }
-	float& Matrix::m3()  { return this->_m3; }
-	float& Matrix::m4()  { return this->_m4; }
-	float& Matrix::m5()  { return this->_m5; }
-	float& Matrix::m6()  { return this->_m6; }
-	float& Matrix::m7()  { return this->_m7; }
-	float& Matrix::m8()  { return this->_m8; }
-	float& Matrix::m9()  { return this->_m9; }
-	float& Matrix::m10() { return this->_m10;}
-	float& Matrix::m11() { return this->_m11;}
-	float& Matrix::m12() { return this->_m12;}
-	float& Matrix::m13() { return this->_m13;}
-	float& Matrix::m14() { return this->_m14;}
-	float& Matrix::m15() { return this->_m15;}
+	float& Matrix::m0() { return this->_m0; }
+	float& Matrix::m1() { return this->_m1; }
+	float& Matrix::m2() { return this->_m2; }
+	float& Matrix::m3() { return this->_m3; }
+	float& Matrix::m4() { return this->_m4; }
+	float& Matrix::m5() { return this->_m5; }
+	float& Matrix::m6() { return this->_m6; }
+	float& Matrix::m7() { return this->_m7; }
+	float& Matrix::m8() { return this->_m8; }
+	float& Matrix::m9() { return this->_m9; }
+	float& Matrix::m10() { return this->_m10; }
+	float& Matrix::m11() { return this->_m11; }
+	float& Matrix::m12() { return this->_m12; }
+	float& Matrix::m13() { return this->_m13; }
+	float& Matrix::m14() { return this->_m14; }
+	float& Matrix::m15() { return this->_m15; }
 
-	float Matrix::m0()  const { return this->_m0; }
-	float Matrix::m1()  const { return this->_m1; }
-	float Matrix::m2()  const { return this->_m2; }
-	float Matrix::m3()  const { return this->_m3; }
-	float Matrix::m4()  const { return this->_m4; }
-	float Matrix::m5()  const { return this->_m5; }
-	float Matrix::m6()  const { return this->_m6; }
-	float Matrix::m7()  const { return this->_m7; }
-	float Matrix::m8()  const { return this->_m8; }
-	float Matrix::m9()  const { return this->_m9; }
-	float Matrix::m10() const { return this->_m10;}
-	float Matrix::m11() const { return this->_m11;}
-	float Matrix::m12() const { return this->_m12;}
-	float Matrix::m13() const { return this->_m13;}
-	float Matrix::m14() const { return this->_m14;}
-	float Matrix::m15() const { return this->_m15;}
+	const float Matrix::m0()  const { return this->_m0; }
+	const float Matrix::m1()  const { return this->_m1; }
+	const float Matrix::m2()  const { return this->_m2; }
+	const float Matrix::m3()  const { return this->_m3; }
+	const float Matrix::m4()  const { return this->_m4; }
+	const float Matrix::m5()  const { return this->_m5; }
+	const float Matrix::m6()  const { return this->_m6; }
+	const float Matrix::m7()  const { return this->_m7; }
+	const float Matrix::m8()  const { return this->_m8; }
+	const float Matrix::m9()  const { return this->_m9; }
+	const float Matrix::m10() const { return this->_m10; }
+	const float Matrix::m11() const { return this->_m11; }
+	const float Matrix::m12() const { return this->_m12; }
+	const float Matrix::m13() const { return this->_m13; }
+	const float Matrix::m14() const { return this->_m14; }
+	const float Matrix::m15() const { return this->_m15; }
 
 	//---Private Helpers... for duplicate code in specialized constructors and setters---
 	void Matrix::SetRotAxisAngle(const Vect& RotAxis, const float& RotAngle) {
-	
+
 		// angle
 			// axis;
 		const float angle_a = 0.5f * RotAngle;
-		
-		const float cos_a = cosf(angle_a);
-		const float sin_a = sinf(angle_a);
+
+		const float cos_a = Trig::cos(angle_a);
+		const float sin_a = Trig::sin(angle_a);
 
 		Vect qV = RotAxis.getNorm();
 
@@ -995,21 +1013,21 @@ namespace Azul
 		Q[w] = cos_a;
 
 		// this function has been transposed
-	
+
 		// ADD test to make sure that quat is normalized
 
 		const float x2 = Q[x] + Q[x];
 		const float y2 = Q[y] + Q[y];
 		const float z2 = Q[z] + Q[z];
-		
+
 		const float xx = Q[x] * x2;
 		const float xy = Q[x] * y2;
 		const float xz = Q[x] * z2;
-		
+
 		const float yy = Q[y] * y2;
 		const float yz = Q[y] * z2;
 		const float zz = Q[z] * z2;
-		
+
 		const float wx = Q[w] * x2;
 		const float wy = Q[w] * y2;
 		const float wz = Q[w] * z2;
@@ -1039,16 +1057,19 @@ namespace Azul
 		this->_m15 = 1.0f;
 	}
 	void Matrix::SetOrientation(const Orient InEnum, const Vect& zAxisIn, const Vect& yAxisIn) {
-	
-		//Direction of flight is the z axis
 
+		//Direction of flight is the z axis
+		Vect zAxis = zAxisIn.getNorm();
 		//Get x axis by getting cross product of y and z axis
-		Vect xAxis = yAxisIn.cross(zAxisIn);
+		Vect xAxis = yAxisIn.cross(zAxis);
 
 		//normalize
 		xAxis.norm();
-		Vect yAxis = yAxisIn.getNorm();
-		Vect zAxis = zAxisIn.getNorm();
+
+
+		Vect yAxis = zAxis.cross(xAxis);
+		yAxis.getNorm();
+		
 
 		if (InEnum == Orient::LocalToWorld) {
 			//set matrix x, y, z axis
@@ -1098,7 +1119,7 @@ namespace Azul
 		}
 	}
 	void Matrix::SetSpecial(const Special InEnum) {
-	
+
 		if (InEnum == Special::Identity) {
 			//set xAxis
 			this->_m0 = 1.0f;
@@ -1210,8 +1231,8 @@ namespace Azul
 	}
 	void Matrix::SetAxisRotation(const Rot1 InEnum, const float& RotAngle) {
 
-		float cos = cosf(RotAngle);
-		float sin = sinf(RotAngle);
+		float cos = Trig::cos(RotAngle);
+		float sin = Trig::sin(RotAngle);
 
 		switch (InEnum) {
 		case Rot1::X:
@@ -1282,7 +1303,6 @@ namespace Azul
 		this->_m15 = 1.0f;
 	}
 
-
 }
 
-// ---  End of File ---------------
+// ---  End of File --------------

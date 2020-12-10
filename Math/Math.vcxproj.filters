@@ -33,7 +33,16 @@
     <ClInclude Include="include\Vect.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Align16Math.h">
+    <ClInclude Include="include\MathApp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Quat.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\QuatApp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VectApp.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,6 +60,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Vect.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QuatApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VectApp.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,22 +1,17 @@
-//#include "Game/Game.h"
-#include "Editor/Editor.h"
+#include "Game/GameManager.h"
 
-//Game* pGame = 0;
-Editor* pEditor = 0;
+
+using namespace Azul;
+
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	/*pGame = new Game("Graphics_Engine", 1920, 1080);
-	assert(pGame);
-
+	
+	GameManager::Create("Graphics_Engine", 1920, 1080);
+	Game* pGame = GameManager::GetGame();
 	pGame->Run();
-	delete pGame;*/
 
-	pEditor = new Editor("Graphics_Engine", 1920, 1080);
-	assert(pEditor);
-
-	pEditor->Run();
-	delete pEditor;
+	GameManager::Destroy();
 
 	return 0;
 }

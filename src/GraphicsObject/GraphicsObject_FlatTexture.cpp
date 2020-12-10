@@ -28,7 +28,7 @@ namespace Azul
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
 		glEnable(GL_CULL_FACE);
-		glFrontFace(GL_CW);
+		glFrontFace(GL_CCW);
 	}
 
 	void GraphicsObject_FlatTexture::SetDataGPU()

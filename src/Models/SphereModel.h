@@ -1,14 +1,14 @@
 #ifndef SPHERE_MODEL_H
 #define SPHERE_MODEL_H
 
-#include "Model.h"
+#include "PrimitiveModel.h"
 
 namespace Azul
 {
 
 
 
-	class SphereModel : public Model
+	class SphereModel : public PrimitiveModel
 	{
 	public:
 

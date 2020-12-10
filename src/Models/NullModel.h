@@ -11,14 +11,13 @@ namespace Azul
 	{
 	public:
 		NullModel(const char* const modelFileName);
-		~NullModel();
+		virtual ~NullModel();
 
 		// tells the compiler do not create or allow it to be used, c++11
 		NullModel(const NullModel&) = delete;
 		NullModel& operator=(const NullModel& other) = delete;
 
-	private:
-		virtual void privCreateVAO(const char* const modelFileName) override;
+
 
 
 	};

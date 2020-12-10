@@ -52,10 +52,10 @@ void ViewportWindow::Update()
 
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 
-
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
     ImGui::Begin("Viewport");
-    ImGui::Image((void*)ColorAttachment, ImVec2(1920.0, 1080.0));
+    ImGui::Image((void*)ColorAttachment, ImVec2{ 1920.0, 1080.0 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
     ImGui::End();
-
+    ImGui::PopStyleVar(ImGuiStyleVar_WindowPadding);
    
 }

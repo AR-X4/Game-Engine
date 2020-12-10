@@ -1,12 +1,8 @@
 
 
-#include "Game/Game.h"
+#include "Game/GameManager.h"
 #include "Keyboard.h"
 
-#include "Editor/Editor.h"
-
-//extern Game* pGame;
-extern Editor* pEditor;
 
 namespace Azul
 {
@@ -16,8 +12,7 @@ namespace Azul
 	{
 		bool value;
 
-
-		if (pEditor->GetKey(key) == GLFW_PRESS)
+		if (GameManager::GetGame()->GetKey(key) == GLFW_PRESS)
 		{
 			value = true;
 		}
