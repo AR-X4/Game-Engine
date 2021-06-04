@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Common\AnimationUtility.cxx">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Common.cxx">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\GeometryUtility.cxx">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayAnimation.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayCache.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayCamera.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayCommon.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayGenericInfo.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayGlobalSettings.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayHierarchy.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayLight.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayLink.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayLodGroup.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayMarker.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayMaterial.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayMesh.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayNurb.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayPatch.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayPivotsAndLimits.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayPose.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayShape.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplaySkeleton.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayTexture.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\DisplayUserProperties.cxx">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Exporter.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\AnimationUtility.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\GeometryUtility.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayAnimation.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayCache.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayCamera.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayCommon.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayGenericInfo.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayGlobalSettings.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayHierarchy.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayLight.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayLink.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayLodGroup.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayMarker.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayMaterial.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayMesh.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayNurb.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayPatch.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayPivotsAndLimits.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayPose.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayShape.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplaySkeleton.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayTexture.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\DisplayUserProperties.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Exporter.h" />
+    <ClInclude Include="ChunkHeader.h" />
+    <ClInclude Include="PackageHeader.h" />
+    <ClInclude Include="..\Framework\Framework.h">
+      <Filter>_Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\ProjectSettings.h">
+      <Filter>_Framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="_Lib">
+      <UniqueIdentifier>{273285b1-df33-4eb4-817b-509dfb3f0e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Examples">
+      <UniqueIdentifier>{2cf0397a-5dc1-4bd7-8bc3-3b4dcff3d9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{84cfe88f-ba1a-44c6-ac8a-73c7c418a349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Framework">
+      <UniqueIdentifier>{5cf62bb7-553e-45cb-9559-4e262d232487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\File">
+      <UniqueIdentifier>{a48bf4b3-0c8d-4aed-8a32-548c660004fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\File\Include">
+      <UniqueIdentifier>{88f561f8-d5ce-4b10-82ee-4e767a148cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\File\Lib">
+      <UniqueIdentifier>{2cfc6b3a-bbcf-4bc9-a951-82e928bd20eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\fbx">
+      <UniqueIdentifier>{3abd1dea-fe40-455c-ace8-74679679bdce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\fbx\debug">
+      <UniqueIdentifier>{c1a9f644-7763-4b53-b768-0282e23ed268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\fbx\release">
+      <UniqueIdentifier>{0174cdc0-0a1e-4bfa-9198-618ab7f67f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\File\Lib\debug">
+      <UniqueIdentifier>{350a9a89-773e-409a-a6cd-0576b5377732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\Math">
+      <UniqueIdentifier>{2f355809-56bc-47f9-885a-7cde2120d9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\Math\Lib">
+      <UniqueIdentifier>{dc7a6ee2-92c5-43e7-a4f1-74dfc903a061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Lib\Math\Lib\debug">
+      <UniqueIdentifier>{aec976b1-304c-478a-bea2-f66b667c533d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\FBX_Lib\Lib\_Debug\libfbxsdk.lib">
+      <Filter>_Lib\fbx\debug</Filter>
+    </Library>
+    <Library Include="..\FBX_Lib\Lib\_Release\libfbxsdk.lib">
+      <Filter>_Lib\fbx\release</Filter>
+    </Library>
+    <Library Include="..\Debug\File_X86Debug.lib">
+      <Filter>_Lib\File\Lib\debug</Filter>
+    </Library>
+    <Library Include="..\Debug\Math_X86Debug.lib">
+      <Filter>_Lib\Math\Lib\debug</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\File_X86Debug.pdb">
+      <Filter>_Lib\File\Lib\debug</Filter>
+    </None>
+    <None Include="..\Debug\Math_X86Debug.pdb">
+      <Filter>_Lib\Math\Lib\debug</Filter>
+    </None>
+  </ItemGroup>
+</Project>

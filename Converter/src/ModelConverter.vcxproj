@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug (DLL)|Win32">
+      <Configuration>Debug (DLL)</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release (DLL)|Win32">
+      <Configuration>Release (DLL)</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>ModelConverter</ProjectName>
+    <ProjectGuid>{107898eb-ae24-44fa-ac4f-05603e70b334}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'">$(SolutionDir)Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'">$(SolutionDir)Debug\Obj\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'">$(SolutionDir)Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'">$(SolutionDir)Release\Obj\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(SolutionDir)FBX_Lib;$(SolutionDir)File\include;$(SolutionDir)Math\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FBXSDK_SHARED;MEMORY_LOGS_DIR=R"($(SolutionDir))";TOOLS_VERSION=R"($(VCToolsVersion))";WINDOWS_TARGET_PLATFORM="$(TargetPlatformVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ForcedIncludeFiles>Framework.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)FBX_Lib\Lib\_Debug\libfbxsdk.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>$(SolutionDir)Framework;$(SolutionDir)FBX_LIB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FBXSDK_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ForcedIncludeFiles>Framework.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)FBX_Lib\Lib\_Release\libfbxsdk.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Common\AnimationUtility.cxx" />
+    <ClCompile Include="Common\Common.cxx" />
+    <ClCompile Include="Common\GeometryUtility.cxx" />
+    <ClCompile Include="Examples\DisplayAnimation.cxx" />
+    <ClCompile Include="Examples\DisplayCache.cxx" />
+    <ClCompile Include="Examples\DisplayCamera.cxx" />
+    <ClCompile Include="Examples\DisplayCommon.cxx" />
+    <ClCompile Include="Examples\DisplayGenericInfo.cxx" />
+    <ClCompile Include="Examples\DisplayGlobalSettings.cxx" />
+    <ClCompile Include="Examples\DisplayHierarchy.cxx" />
+    <ClCompile Include="Examples\DisplayLight.cxx" />
+    <ClCompile Include="Examples\DisplayLink.cxx" />
+    <ClCompile Include="Examples\DisplayMarker.cxx" />
+    <ClCompile Include="Examples\DisplayMaterial.cxx" />
+    <ClCompile Include="Examples\DisplayMesh.cxx" />
+    <ClCompile Include="Examples\DisplayNurb.cxx" />
+    <ClCompile Include="Examples\DisplayPatch.cxx" />
+    <ClCompile Include="Examples\DisplayPivotsAndLimits.cxx" />
+    <ClCompile Include="Examples\DisplayPose.cxx" />
+    <ClCompile Include="Examples\DisplayShape.cxx" />
+    <ClCompile Include="Examples\DisplaySkeleton.cxx" />
+    <ClCompile Include="Examples\DisplayTexture.cxx" />
+    <ClCompile Include="Examples\DisplayUserProperties.cxx" />
+    <ClCompile Include="Examples\DisplayLodGroup.cxx" />
+    <ClCompile Include="Exporter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Framework\Framework.h" />
+    <ClInclude Include="..\Framework\ProjectSettings.h" />
+    <ClInclude Include="ChunkHeader.h" />
+    <ClInclude Include="Common\AnimationUtility.h" />
+    <ClInclude Include="Common\Common.h" />
+    <ClInclude Include="Common\GeometryUtility.h" />
+    <ClInclude Include="Examples\DisplayAnimation.h" />
+    <ClInclude Include="Examples\DisplayCache.h" />
+    <ClInclude Include="Examples\DisplayCamera.h" />
+    <ClInclude Include="Examples\DisplayCommon.h" />
+    <ClInclude Include="Examples\DisplayGenericInfo.h" />
+    <ClInclude Include="Examples\DisplayGlobalSettings.h" />
+    <ClInclude Include="Examples\DisplayHierarchy.h" />
+    <ClInclude Include="Examples\DisplayLight.h" />
+    <ClInclude Include="Examples\DisplayLink.h" />
+    <ClInclude Include="Examples\DisplayMarker.h" />
+    <ClInclude Include="Examples\DisplayMaterial.h" />
+    <ClInclude Include="Examples\DisplayMesh.h" />
+    <ClInclude Include="Examples\DisplayNurb.h" />
+    <ClInclude Include="Examples\DisplayPatch.h" />
+    <ClInclude Include="Examples\DisplayPivotsAndLimits.h" />
+    <ClInclude Include="Examples\DisplayPose.h" />
+    <ClInclude Include="Examples\DisplayShape.h" />
+    <ClInclude Include="Examples\DisplaySkeleton.h" />
+    <ClInclude Include="Examples\DisplayTexture.h" />
+    <ClInclude Include="Examples\DisplayLodGroup.h" />
+    <ClInclude Include="Examples\DisplayUserProperties.h" />
+    <ClInclude Include="Exporter.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="PackageHeader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\Debug\File_X86Debug.lib" />
+    <Library Include="..\Debug\Math_X86Debug.lib" />
+    <Library Include="..\FBX_Lib\Lib\_Debug\libfbxsdk.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release (DLL)|Win32'">true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\FBX_Lib\Lib\_Release\libfbxsdk.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug (DLL)|Win32'">true</ExcludedFromBuild>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\File_X86Debug.pdb" />
+    <None Include="..\Debug\Math_X86Debug.pdb" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
